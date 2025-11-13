@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from ollama_utils import * 
+from routes.llm_router import router as llm_router
 
 # App Initialization
 app = FastAPI(title = "Ollama API Service",
@@ -15,4 +15,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add the router
+app.include_router(llm_router, prefix = "/api/llm", tags = ["llm"])
 
