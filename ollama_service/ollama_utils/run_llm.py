@@ -7,7 +7,7 @@ class OllamaLLMService:
     def __init__(self, system_prompt : str = ""):
 
         # Set the model 
-        self.__model = "llama3.2"
+        self.__model = "llama3.2" # Will update later 
 
         # System prompt setting
         self.__system_prompt = system_prompt
