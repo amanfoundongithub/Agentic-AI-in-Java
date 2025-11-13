@@ -28,4 +28,4 @@ After setting up the Ollama server, you can run the Python part by the following
 uvicorn app:app --reload
 ```
 
-This wlll start the server on port 8000, and API calls can be easily called over this.
+This wlll start the server on port 8000, and API calls can be easily called over this. The server uses FastAPI for asynchronous and scalable operations.
