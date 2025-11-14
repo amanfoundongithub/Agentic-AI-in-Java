@@ -1,6 +1,8 @@
 package com.ai.agent.llm.model.response.impl;
 
-public class OllamaResponse {
+import com.ai.agent.llm.model.response.LLMResponse;
+
+public class OllamaResponse extends LLMResponse {
 
     public boolean isGenerated;
 
