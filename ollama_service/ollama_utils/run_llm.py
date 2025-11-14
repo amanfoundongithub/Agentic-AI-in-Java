@@ -63,12 +63,6 @@ class OllamaLLMService:
                 "created_at": ollama_response.created_at,
                 "done": ollama_response.done,
                 "done_reason": ollama_response.done_reason,
-                "total_duration": ollama_response.total_duration,
-                "load_duration": ollama_response.load_duration,
-                "prompt_eval_count": ollama_response.prompt_eval_count,
-                "prompt_eval_duration": ollama_response.prompt_eval_duration,
-                "eval_count": ollama_response.eval_count,
-                "eval_duration": ollama_response.eval_duration,
                 "message": {
                     "role": message_obj.role if message_obj else None,
                     "content": message_obj.content if message_obj else None,

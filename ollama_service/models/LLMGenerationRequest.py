@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class LLMGenerationRequest(BaseModel):
 
     # System prompt
-    system_prompt: str 
+    systemPrompt: str 
 
     # User prompt 
-    user_prompt: str 
+    prompt: str 

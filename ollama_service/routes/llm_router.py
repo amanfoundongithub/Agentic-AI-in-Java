@@ -15,10 +15,10 @@ ollama_agent = OllamaLLMService()
 async def generate_llm_response(request : LLMGenerationRequest):
 
     # Add the system prompt 
-    ollama_agent.set_system_prompt(request.system_prompt)
+    ollama_agent.set_system_prompt(request.systemPrompt)
 
     # Generate the response
-    ollama_agent_response = ollama_agent.generate_response(request.user_prompt)
+    ollama_agent_response = ollama_agent.generate_response(request.prompt)
 
     if ollama_agent_response.get("isGenerated"):
         return JSONResponse(
