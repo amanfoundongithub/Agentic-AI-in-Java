@@ -13,18 +13,18 @@ import java.util.Map;
 @Component
 public class LLMContext {
 
-    Map<String, LLMService<?, ?>> llmServiceMap = new HashMap<>();
+    Map<String, LLMService<?>> llmServiceMap = new HashMap<>();
 
     @Autowired
-    public LLMContext(List<LLMService<?,?>> llmServices) {
-        for(LLMService<?, ?> service : llmServices) {
+    public LLMContext(List<LLMService<?>> llmServices) {
+        for(LLMService<?> service : llmServices) {
             llmServiceMap.put(service.model(), service);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public<R extends LLMResponse, Q extends LLMRequest>  R generate(String model, Q query) {
-        LLMService<Q, R> llmService = (LLMService<Q, R>) llmServiceMap.get(model);
+    public<Q extends LLMRequest>  LLMResponse generate(String model, Q query) {
+        LLMService<Q> llmService = (LLMService<Q>) llmServiceMap.get(model);
 
         if(llmService == null) {
             throw new IllegalArgumentException("No LLM Service found with the name: " + model);

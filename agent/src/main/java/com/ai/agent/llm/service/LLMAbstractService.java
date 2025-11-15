@@ -5,12 +5,15 @@ import com.ai.agent.llm.model.response.LLMResponse;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class LLMAbstractService<REQ extends LLMRequest, RES extends LLMResponse> implements LLMService<REQ, RES>{
+public abstract class LLMAbstractService<REQ extends LLMRequest, HTTP_RES> implements LLMService<REQ>{
 
     protected String url;
-    protected Class<RES> responseClass;
+    protected Class<HTTP_RES> responseClass;
 
-    public RES generate(REQ request) {
+    protected abstract LLMResponse convert(HTTP_RES response);
+
+
+    public LLMResponse generate(REQ request) {
 
         // Initialize a template to send the request
         RestTemplate template = new RestTemplate();
@@ -23,14 +26,15 @@ public abstract class LLMAbstractService<REQ extends LLMRequest, RES extends LLM
         HttpEntity<REQ> httpEntity = new HttpEntity<>(request, headers);
 
         // Send the POST request
-        ResponseEntity<RES> responseEntity = template.exchange(
+        ResponseEntity<HTTP_RES> responseEntity = template.exchange(
                 url,
                 HttpMethod.POST,
                 httpEntity,
                 responseClass
         );
 
+
         // Return the content
-        return responseEntity.getBody();
+        return convert(responseEntity.getBody());
     }
 }
