@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     @GetMapping("/hello")
-    public String test_hello() {
-        return "hello";
-    }
-
+    public String test_hello() { return "hello";}
 
 }
