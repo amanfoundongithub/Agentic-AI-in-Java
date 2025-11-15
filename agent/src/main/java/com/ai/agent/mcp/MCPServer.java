@@ -3,23 +3,24 @@ package com.ai.agent.mcp;
 import com.ai.agent.mcp.tool.Tool;
 import com.ai.agent.mcp.tool_query.ToolQuery;
 import com.ai.agent.mcp.tool_result.ToolResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+@Component
 public class MCPServer {
 
     // Map of all tool names
     Map<String, Tool<?, ?>> toolsMap = new HashMap<>();
 
-    public void add(Tool<?,?> tool) {
-        toolsMap.put(tool.name(), tool);
-    }
-
-    public void add(List<Tool<?,?>> tools) {
-        for(Tool tool : tools) {
-            toolsMap.put(tool.name(), tool);
+    @Autowired
+    public MCPServer(List<Tool<?, ?>> tools) {
+        for (Tool<?, ?> tool : tools) {
+            this.toolsMap.put(tool.name(), tool);
         }
     }
 
@@ -34,7 +35,5 @@ public class MCPServer {
         }
 
     }
-
-
 
 }
