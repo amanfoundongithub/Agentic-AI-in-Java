@@ -1,8 +1,8 @@
-package com.ai.agent.tools.dto.query.impl;
+package com.ai.agent.mcp.tool_query.impl;
 
-import com.ai.agent.tools.dto.query.ToolQuery;
+import com.ai.agent.mcp.tool_query.ToolQuery;
 
-public class GoogleQuery extends ToolQuery {
+public class GoogleSearchQuery extends ToolQuery {
 
     private String query;
 

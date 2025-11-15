@@ -1,11 +1,11 @@
-package com.ai.agent.tools.dto.result.impl;
+package com.ai.agent.mcp.tool_result.impl;
 
-import com.ai.agent.tools.dto.result.ToolResult;
+import com.ai.agent.mcp.tool_result.ToolResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleToolResults extends ToolResult {
+public class GoogleSearchResult extends ToolResult {
 
     private List<SearchInfo> results = new ArrayList<>();
 

@@ -1,9 +1,9 @@
-package com.ai.agent.tools.dto;
+package com.ai.agent.mcp.tool_http;
 
 import java.util.List;
 import java.util.Map;
 
-public class GoogleSearchResults {
+public class GoogleSearchAPIResults {
 
     public String kind;
     public Url url;

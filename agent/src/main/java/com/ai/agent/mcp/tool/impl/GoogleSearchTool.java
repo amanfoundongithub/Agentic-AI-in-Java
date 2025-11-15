@@ -1,8 +1,8 @@
-package com.ai.agent.tools.impl;
+package com.ai.agent.mcp.tool.impl;
 
-import com.ai.agent.tools.Tool;
-import com.ai.agent.tools.dto.query.impl.GoogleQuery;
-import com.ai.agent.tools.dto.result.impl.GoogleToolResults;
+import com.ai.agent.mcp.tool.Tool;
+import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
+import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @Service
-public class GoogleSearchTool implements Tool<GoogleToolResults, GoogleQuery> {
+public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQuery> {
 
     @Value("${google.api.key}")
     private String apiKey;
@@ -25,7 +25,18 @@ public class GoogleSearchTool implements Tool<GoogleToolResults, GoogleQuery> {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public GoogleToolResults execute(GoogleQuery query) {
+    @Override
+    public String name() {
+        return "Google Search Tool";
+    }
+
+    @Override
+    public String description() {
+        return "Fetches results from Google search";
+    }
+
+    @Override
+    public GoogleSearchResult execute(GoogleSearchQuery query) {
 
         String requestUrl = baseUrl
                 + "?key=" + apiKey
@@ -34,7 +45,7 @@ public class GoogleSearchTool implements Tool<GoogleToolResults, GoogleQuery> {
 
         Map results = restTemplate.getForObject(requestUrl, Map.class);
 
-        GoogleToolResults finalResults = new GoogleToolResults();
+        GoogleSearchResult finalResults = new GoogleSearchResult();
         List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
 
         if (items != null) {

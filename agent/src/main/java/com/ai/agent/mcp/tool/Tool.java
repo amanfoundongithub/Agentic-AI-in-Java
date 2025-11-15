@@ -1,10 +1,12 @@
-package com.ai.agent.tools;
+package com.ai.agent.mcp.tool;
 
-import com.ai.agent.tools.dto.query.ToolQuery;
-import com.ai.agent.tools.dto.result.ToolResult;
+import com.ai.agent.mcp.tool_query.ToolQuery;
+import com.ai.agent.mcp.tool_result.ToolResult;
 
 public interface Tool<R extends ToolResult, Q extends ToolQuery>{
 
+    String name();
+    String description();
     /**
      * A common interface to execute the action of a tool
      *
