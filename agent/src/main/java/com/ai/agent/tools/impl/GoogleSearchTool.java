@@ -1,18 +1,18 @@
 package com.ai.agent.tools.impl;
 
 import com.ai.agent.tools.Tool;
-import com.ai.agent.tools.dto.GoogleSearchResults;
-import com.ai.agent.tools.dto.GoogleToolResults;
+import com.ai.agent.tools.dto.query.impl.GoogleQuery;
+import com.ai.agent.tools.dto.result.impl.GoogleToolResults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
-public class GoogleSearchTool implements Tool<List<GoogleToolResults>, String> {
+public class GoogleSearchTool implements Tool<GoogleToolResults, GoogleQuery> {
 
     @Value("${google.api.key}")
     private String apiKey;
@@ -25,22 +25,27 @@ public class GoogleSearchTool implements Tool<List<GoogleToolResults>, String> {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public List<GoogleToolResults> execute(String query) {
+    public GoogleToolResults execute(GoogleQuery query) {
 
         String requestUrl = baseUrl
                 + "?key=" + apiKey
                 + "&cx=" + cx
-                + "&q=" + query;
+                + "&q=" + query.getQuery();
 
-        GoogleSearchResults results = restTemplate.getForObject(requestUrl, GoogleSearchResults.class);
+        Map results = restTemplate.getForObject(requestUrl, Map.class);
 
-        List<GoogleToolResults> finalResults = new ArrayList<>();
+        GoogleToolResults finalResults = new GoogleToolResults();
+        List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
 
-        for(GoogleSearchResults.Item item : results.items) {
-            GoogleToolResults result = new GoogleToolResults(item.title, item.snippet, item.link);
-            finalResults.add(result);
+        if (items != null) {
+            for (Map<String, Object> item : items) {
+                String title = (String) item.get("title");
+                String snippet = (String) item.get("snippet");
+
+                finalResults.add(title, snippet);
+
+            }
         }
-
         return finalResults;
 
     }
