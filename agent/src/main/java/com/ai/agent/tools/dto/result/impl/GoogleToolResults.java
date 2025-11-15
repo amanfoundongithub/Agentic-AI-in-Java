@@ -2,15 +2,24 @@ package com.ai.agent.tools.dto.result.impl;
 
 import com.ai.agent.tools.dto.result.ToolResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A class to store all the Google Search Results
- *
- */
 public class GoogleToolResults extends ToolResult {
 
-    private List<SearchInfo> results;
+    private List<SearchInfo> results = new ArrayList<>();
+
+    public List<SearchInfo> getResults() {
+        return results;
+    }
+
+    public void add(SearchInfo info) {
+        results.add(info);
+    }
+
+    public void add(String title, String snippet) {
+        results.add(new SearchInfo(title, snippet));
+    }
 
     public static class SearchInfo {
         private String title;
@@ -21,29 +30,12 @@ public class GoogleToolResults extends ToolResult {
             this.snippet = snippet;
         }
 
-        @Override
-        public String toString() {
-            return "{'title':'" + title +
-                         "','info':" + snippet + "'}";
+        public String getTitle() {
+            return title;
         }
-    }
 
-    public void add(SearchInfo info) {
-        results.add(info);
-    }
-
-    public void add(String title, String snippet) {
-        SearchInfo info = new SearchInfo(title, snippet);
-        results.add(info);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder info = new StringBuilder();
-        for(SearchInfo result : results) {
-            String resultInfo = result.toString();
-            info.append(resultInfo);
+        public String getSnippet() {
+            return snippet;
         }
-        return info.toString();
     }
 }
