@@ -4,14 +4,14 @@ import com.ai.agent.mcp.tool.Tool;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
 
 
-@Service
+@Component
 public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQuery> {
 
     @Value("${google.api.key}")
