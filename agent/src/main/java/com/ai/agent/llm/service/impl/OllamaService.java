@@ -3,10 +3,9 @@ package com.ai.agent.llm.service.impl;
 import com.ai.agent.llm.model.request.impl.OllamaRequest;
 import com.ai.agent.llm.model.response.impl.OllamaResponse;
 import com.ai.agent.llm.service.LLMAbstractService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-
-@Service
+@Component
 public class OllamaService extends LLMAbstractService<OllamaRequest, OllamaResponse> {
 
     public OllamaService() {
@@ -14,4 +13,8 @@ public class OllamaService extends LLMAbstractService<OllamaRequest, OllamaRespo
         this.responseClass = OllamaResponse.class;
     }
 
+    @Override
+    public String model() {
+        return "llama3.2";
+    }
 }
