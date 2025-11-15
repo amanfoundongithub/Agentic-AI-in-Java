@@ -1,13 +1,16 @@
 package com.ai.agent.tools;
 
-public interface Tool<RES, REQ>{
+import com.ai.agent.tools.dto.query.ToolQuery;
+import com.ai.agent.tools.dto.result.ToolResult;
+
+public interface Tool<R extends ToolResult, Q extends ToolQuery>{
 
     /**
      * A common interface to execute the action of a tool
      *
-     * @param request The entity that contains the requested action items for the tool
+     * @param query The entity that contains the requested action items for the tool
      * @return Response from the tool
      */
-    RES execute(REQ request);
+    R execute(Q query);
 
 }
