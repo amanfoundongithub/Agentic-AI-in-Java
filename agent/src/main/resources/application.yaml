@@ -1,2 +1,9 @@
+# Server configured to port 5200
 server:
   port: 5200
+
+
+# Spring configurations to include secret YAML file
+spring:
+  config:
+    import: "application-secret.yaml"
