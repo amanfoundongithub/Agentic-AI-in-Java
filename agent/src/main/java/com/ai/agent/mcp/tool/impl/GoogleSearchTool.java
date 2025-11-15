@@ -27,7 +27,7 @@ public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQu
 
     @Override
     public String name() {
-        return "Google Search Tool";
+        return "google_search_tool";
     }
 
     @Override
