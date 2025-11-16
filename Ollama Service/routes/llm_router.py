@@ -3,12 +3,12 @@ from fastapi.responses import JSONResponse
 
 
 from models.LLMGenerationRequest import LLMGenerationRequest
-from service import OllamaLLMService
+from service import OllamaService
 
 router = APIRouter()
 
 # LLM Generation Request
-ollama_agent = OllamaLLMService()
+ollama_agent = OllamaService()
 
 
 @router.post("/generate")
