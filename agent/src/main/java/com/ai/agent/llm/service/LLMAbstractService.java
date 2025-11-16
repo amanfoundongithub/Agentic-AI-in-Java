@@ -1,7 +1,7 @@
 package com.ai.agent.llm.service;
 
-import com.ai.agent.llm.model.LLMRequest;
-import com.ai.agent.llm.model.LLMResponse;
+import com.ai.agent.llm.dto.LLMRequest;
+import com.ai.agent.llm.dto.LLMResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;

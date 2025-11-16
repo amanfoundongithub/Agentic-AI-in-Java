@@ -1,7 +1,7 @@
 package com.ai.agent.llm.service;
 
-import com.ai.agent.llm.model.LLMRequest;
-import com.ai.agent.llm.model.LLMResponse;
+import com.ai.agent.llm.dto.LLMRequest;
+import com.ai.agent.llm.dto.LLMResponse;
 
 /**
  * Interface for the LLM Service provided via APIs
