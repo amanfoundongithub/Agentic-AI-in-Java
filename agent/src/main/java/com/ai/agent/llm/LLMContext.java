@@ -1,7 +1,7 @@
 package com.ai.agent.llm;
 
-import com.ai.agent.llm.model.request.LLMRequest;
-import com.ai.agent.llm.model.response.LLMResponse;
+import com.ai.agent.llm.model.LLMRequest;
+import com.ai.agent.llm.model.LLMResponse;
 import com.ai.agent.llm.service.LLMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,18 +13,22 @@ import java.util.Map;
 @Component
 public class LLMContext {
 
-    Map<String, LLMService<?>> llmServiceMap = new HashMap<>();
+    Map<String, LLMService> llmServiceMap = new HashMap<>();
 
     @Autowired
-    public LLMContext(List<LLMService<?>> llmServices) {
-        for(LLMService<?> service : llmServices) {
+    public LLMContext(List<LLMService> llmServices) {
+        for(LLMService service : llmServices) {
             llmServiceMap.put(service.model(), service);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public<Q extends LLMRequest>  LLMResponse generate(String model, Q query) {
-        LLMService<Q> llmService = (LLMService<Q>) llmServiceMap.get(model);
+    public LLMService get(String model) {
+        return llmServiceMap.get(model);
+    }
+
+
+    public LLMResponse generate(String model,LLMRequest query) {
+        LLMService llmService = llmServiceMap.get(model);
 
         if(llmService == null) {
             throw new IllegalArgumentException("No LLM Service found with the name: " + model);
