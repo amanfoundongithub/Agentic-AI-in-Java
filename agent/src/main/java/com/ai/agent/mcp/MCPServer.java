@@ -2,7 +2,6 @@ package com.ai.agent.mcp;
 
 import com.ai.agent.mcp.tool.Tool;
 import com.ai.agent.mcp.tool_query.ToolQuery;
-import com.ai.agent.mcp.tool_result.ToolResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,16 +23,34 @@ public class MCPServer {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public<R extends ToolResult, Q extends ToolQuery>  R execute(String name, Q query) {
-        Tool<R, Q> tool = (Tool<R, Q>) toolsMap.get(name);
 
-        if(tool == null) {
-            throw new IllegalArgumentException("No tool found with the name: " + name);
-        } else {
-            return tool.execute(query);
-        }
+    public Tool<?, ?> getTool(String name) {
+        return toolsMap.get(name);
+    }
 
+    public String showAllAvailableTools() {
+        StringBuilder toolsSection = new StringBuilder("Available tools:\n");
+
+        toolsMap.forEach((name, tool) -> {
+            toolsSection.append("- ").append(name).append(":\n");
+            toolsSection.append("  description: ").append(tool.description()).append("\n");
+            toolsSection.append("  input_format: {\n");
+
+            Class<? extends ToolQuery> qClass = tool.queryClass();
+            if (qClass != null) {
+                for (var field : qClass.getDeclaredFields()) {
+                    toolsSection.append("    \"")
+                            .append(field.getName())
+                            .append("\": \"")
+                            .append(field.getType().getSimpleName())
+                            .append("\"\n");
+                }
+            }
+
+            toolsSection.append("  }\n\n");
+        });
+
+        return toolsSection.toString();
     }
 
 }
