@@ -1,4 +1,4 @@
-package com.ai.agent.llm.model;
+package com.ai.agent.llm.dto;
 
 public class LLMResponse {
 
