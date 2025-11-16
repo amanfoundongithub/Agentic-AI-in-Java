@@ -1,5 +1,6 @@
 package com.ai.agent.llm;
 
+import com.ai.agent.exception.LLMNotFoundException;
 import com.ai.agent.llm.service.LLMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class LLMContext {
         LLMService service = llmServiceMap.get(model);
 
         if(service == null) {
-            throw new IllegalArgumentException("No LLM found with the name: " + model);
+            throw new LLMNotFoundException(model);
         } else {
             return service;
         }
