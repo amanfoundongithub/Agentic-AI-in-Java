@@ -13,6 +13,14 @@ public class AgentConfig {
     // Maximum number of iterations in the agent's loop
     public static final int MAX_ITERATIONS = 10;
 
+    // Names of all the tags for the agent
+    public static final String FINAL_TAG   = "final";
+    public static final String ACTION_TAG  = "action";
+    public static final String THOUGHT_TAG = "thought";
+
+
+
+
     private AgentConfig() {
         // To abstract the default public constructor
     }
