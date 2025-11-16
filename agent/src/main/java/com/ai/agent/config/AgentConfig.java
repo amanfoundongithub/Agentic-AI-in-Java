@@ -23,11 +23,8 @@ public class AgentConfig {
     public static final String GENERATED_ANSWER = "memory";
     public static final String TOOL_ACTION = "tool";
 
-
-
-
     private AgentConfig() {
-        // To abstract the default public constructor
+        // Removes default public constructor
     }
 
 }
