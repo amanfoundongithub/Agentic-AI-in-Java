@@ -8,8 +8,8 @@ public class MemoryContext {
     private final List<Memory> context = new ArrayList<>();
 
     public static class Memory {
-        public String role;
-        public String content;
+        public final String role;
+        public final String content;
 
         public Memory(String role, String content) {
             this.role = role;
