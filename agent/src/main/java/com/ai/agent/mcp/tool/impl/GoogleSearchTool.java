@@ -1,5 +1,6 @@
 package com.ai.agent.mcp.tool.impl;
 
+import com.ai.agent.exception.ResultsNotFound;
 import com.ai.agent.mcp.tool.Tool;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
@@ -56,26 +57,41 @@ public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQu
     @Override
     public GoogleSearchResult execute(GoogleSearchQuery query) {
 
-
-        String requestUrl = baseUrl
-                + "?key=" + apiKey
-                + "&cx=" + cx
-                + "&q=" + query.getQuery();
-
-        Map results = restTemplate.getForObject(requestUrl, Map.class);
-
+        LOGGER.info("Request {} for Google Search Received", query);
         GoogleSearchResult finalResults = new GoogleSearchResult();
-        List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
 
-        if (items != null) {
-            for (Map<String, Object> item : items) {
-                String title = (String) item.get("title");
-                String snippet = (String) item.get("snippet");
+        try {
 
-                finalResults.add(title, snippet);
+            // Make a request URL
+            String requestUrl = baseUrl
+                    + "?key=" + apiKey
+                    + "&cx=" + cx
+                    + "&q=" + query.getQuery();
 
+            // Send GET request
+            Map results = restTemplate.getForObject(requestUrl, Map.class);
+            if(results == null) {
+                throw new ResultsNotFound("Google Search");
             }
+
+            List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
+
+            if (items != null) {
+                for (Map<String, Object> item : items) {
+                    String title = (String) item.get("title");
+                    String snippet = (String) item.get("snippet");
+
+                    finalResults.add(title, snippet);
+
+                }
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Error in Google Search : {}", e.getMessage());
+        } finally {
+            LOGGER.info("Request {} for Google Search Completed", query);
         }
+
         return finalResults;
 
     }
