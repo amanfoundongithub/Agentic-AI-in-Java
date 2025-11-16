@@ -1,4 +1,4 @@
-package com.ai.agent.llm.model.response.impl;
+package com.ai.agent.llm.dto.http;
 
 public class OllamaAPIResponse {
     public boolean isGenerated;
