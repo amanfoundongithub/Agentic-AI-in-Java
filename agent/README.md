@@ -28,7 +28,7 @@ Ensure that you sync the repositories before starting the Java portion.
 ## Running The Agent
 **Important**: _Before running the agent, please ensure that you have
 the Python service up and running. Instructions to run Python service are 
-given [here](https://github.com/amanfoundongithub/AI-in-Java/tree/main/ollama_service)._
+given [here](https://github.com/amanfoundongithub/Agentic-AI-in-Java/blob/main/Ollama%20Service/README.md)._
 
 To run the agent, you can go to the `AgentApplication.java` and start debugging
 the application.
