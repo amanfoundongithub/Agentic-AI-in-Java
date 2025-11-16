@@ -1,31 +1,35 @@
-## Python Ollama Services
+## Ollama Services (Python)
 **Note:** _This is a Python repository and requires that Python be installed appropriately._
 
+This is the Python part that exposes an endpoint for the LLM to generate responses. 
 
+## Initial Setup
+This repository is entirely writtten in Python and requires at least version 3.8. You can install Python from [here](https://www.python.org/).
 
-## Setup
-There is a one time setup that can be done by using the following command:
+After setting up the Python, you can install all the requirements for this project by using the following commnad:
 
 ```bash
 pip install -r requirements.txt
 ```
-This will install all the required modules needed to run the code.
+This will successfully install all the required modules.
 
-Also, the code requires `Ollama`, which is an open source library for running LLMs locally. 
+The project uses `Ollama` for running the LLMs locally. In macOS, you might want to install it using homebrew.
 
-If using macOS, it is recommended to use homebrew and install ollama. 
-
-## Running the Ollama Service
-To run the Ollama service, do the following:
+## Running the Service
+To run the service, we will first setup the LLMs to accept and generate responses locally by using the following commands:
 ```bash
 ollama serve
 ollama run <model name>
 ```
-This will fetch and start the ollama server locally. 
+This will fetch and start the ollama server locally. For now, we are using `llama3.2` for the project. 
 
-After setting up the Ollama server, you can run the Python part by the following:
+After the LLMs are configured to run, you can expose them using FastAPI endpoints as follows:
+
 ```bash
 uvicorn app:app --reload
 ```
 
-This wlll start the server on port 8000, and API calls can be easily called over this. The server uses FastAPI for asynchronous and scalable operations.
+The server will be exposed at port `8000` and can be easily accessed using localhost. 
+
+For the route, you might refer to the individual routers in the `/routes` directory. 
+
