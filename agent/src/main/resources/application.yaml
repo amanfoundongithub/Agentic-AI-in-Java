@@ -6,4 +6,6 @@ server:
 # Spring configurations to include secret YAML file
 spring:
   config:
-    import: "application-secret.yaml"
+    import:
+      - "application-secret.yaml"
+      - "application-tool.yaml"
