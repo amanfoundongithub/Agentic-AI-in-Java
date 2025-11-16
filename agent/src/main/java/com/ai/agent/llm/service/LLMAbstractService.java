@@ -17,11 +17,11 @@ import org.springframework.web.client.RestTemplate;
  */
 public abstract class LLMAbstractService<H> implements LLMService {
 
+    // Rest Template
+    protected static final RestTemplate restTemplate = new RestTemplate();
+
     // Logger
     protected final Logger llmLogger = LoggerFactory.getLogger(getClass());
-
-    // Rest Template
-    protected final RestTemplate restTemplate = new RestTemplate();
 
     protected String url;
     protected Class<H> responseClass;
@@ -38,7 +38,7 @@ public abstract class LLMAbstractService<H> implements LLMService {
     public LLMResponse generate(LLMRequest request) {
 
         // Log the request received
-        llmLogger.info("Received Request For LLM Request");
+        llmLogger.info("Request {} for LLM Generation Received", request);
 
         // Create a response object to be sent
         LLMResponse response = new LLMResponse();
@@ -63,10 +63,9 @@ public abstract class LLMAbstractService<H> implements LLMService {
         } catch (Exception e) {
             llmLogger.error("Error In Processing Request: {}", e.getMessage());
         } finally {
-            llmLogger.info("Request for LLM Generation Completed");
+            llmLogger.info("Request {} for LLM Generation Completed", request);
         }
 
         return response;
-
     }
 }
