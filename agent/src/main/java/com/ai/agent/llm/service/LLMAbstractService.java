@@ -1,40 +1,72 @@
 package com.ai.agent.llm.service;
 
-import com.ai.agent.llm.model.request.LLMRequest;
-import com.ai.agent.llm.model.response.LLMResponse;
+import com.ai.agent.llm.model.LLMRequest;
+import com.ai.agent.llm.model.LLMResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class LLMAbstractService<REQ extends LLMRequest, HTTP_RES> implements LLMService<REQ>{
+
+/**
+ * Abstract implementation of the HTTP method for the LLMService
+ *
+ * @author amanfoundongithub
+ *
+ * @param <H> The HTTP response model expected for the API response
+ */
+public abstract class LLMAbstractService<H> implements LLMService {
+
+    // Logger
+    protected final Logger llmLogger = LoggerFactory.getLogger(getClass());
+
+    // Rest Template
+    protected final RestTemplate restTemplate = new RestTemplate();
 
     protected String url;
-    protected Class<HTTP_RES> responseClass;
-
-    protected abstract LLMResponse convert(HTTP_RES response);
+    protected Class<H> responseClass;
 
 
-    public LLMResponse generate(REQ request) {
-
-        // Initialize a template to send the request
-        RestTemplate template = new RestTemplate();
-
-        // Headers
+    protected HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
 
-        // Entity with the body
-        HttpEntity<REQ> httpEntity = new HttpEntity<>(request, headers);
+    protected abstract LLMResponse convert(H response);
 
-        // Send the POST request
-        ResponseEntity<HTTP_RES> responseEntity = template.exchange(
-                url,
-                HttpMethod.POST,
-                httpEntity,
-                responseClass
-        );
+    public LLMResponse generate(LLMRequest request) {
 
+        // Log the request received
+        llmLogger.info("Received Request For LLM Request");
 
-        // Return the content
-        return convert(responseEntity.getBody());
+        // Create a response object to be sent
+        LLMResponse response = new LLMResponse();
+        response.setGenerated(false);
+
+        try {
+            // Get the headers and add to the body
+            HttpHeaders headers = getHeaders();
+            HttpEntity<LLMRequest> httpEntity = new HttpEntity<>(request, headers);
+
+            // POST request sent
+            ResponseEntity<H> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    httpEntity,
+                    responseClass
+            );
+
+            // Send the body converted
+            response = convert(responseEntity.getBody());
+
+        } catch (Exception e) {
+            llmLogger.error("Error In Processing Request: {}", e.getMessage());
+        } finally {
+            llmLogger.info("Request for LLM Generation Completed");
+        }
+
+        return response;
+
     }
 }
