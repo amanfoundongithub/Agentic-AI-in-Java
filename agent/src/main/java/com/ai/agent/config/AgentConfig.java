@@ -18,10 +18,10 @@ public class AgentConfig {
     public static final String THOUGHT_TAG = "thought";
 
     // Roles for the context
-    public static final String USER_PROMPT = "user";
-    public static final String SYSTEM_PROMPT = "system";
+    public static final String USER_PROMPT      = "user";
+    public static final String SYSTEM_PROMPT    = "system";
     public static final String GENERATED_ANSWER = "memory";
-    public static final String TOOL_ACTION = "tool";
+    public static final String TOOL_ACTION      = "tool";
 
     private AgentConfig() {
         // Removes default public constructor
