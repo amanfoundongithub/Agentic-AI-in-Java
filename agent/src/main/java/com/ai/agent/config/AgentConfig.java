@@ -3,10 +3,9 @@ package com.ai.agent.config;
 
 /**
  * A utility class to store the configurations of the agent
- *
+ * as well as utility constants related to answer generation by ReACT agent.
  *
  * @author amanfoundongithub
- *
  */
 public class AgentConfig {
 
