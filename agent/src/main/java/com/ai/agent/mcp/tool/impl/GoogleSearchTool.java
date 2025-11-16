@@ -3,6 +3,8 @@ package com.ai.agent.mcp.tool.impl;
 import com.ai.agent.mcp.tool.Tool;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +16,12 @@ import java.util.Map;
 @Component
 public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQuery> {
 
+    // Rest Template
+    private static final RestTemplate restTemplate = new RestTemplate();
+
+    // Logger for logging tool requests
+    private static final Logger LOGGER = LoggerFactory.getLogger(GoogleSearchTool.class);
+
     @Value("${google.api.key}")
     private String apiKey;
 
@@ -23,20 +31,31 @@ public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQu
     @Value("${google.api.url}")
     private String baseUrl;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${google_search.name}")
+    private String toolName;
+
+    @Value("${google_search.description}")
+    private String toolDescription;
+
 
     @Override
     public String name() {
-        return "google_search_tool";
+        return toolName;
     }
 
     @Override
     public String description() {
-        return "Fetches results from Google search";
+        return toolDescription;
+    }
+
+    @Override
+    public Class<GoogleSearchQuery> queryClass() {
+        return GoogleSearchQuery.class;
     }
 
     @Override
     public GoogleSearchResult execute(GoogleSearchQuery query) {
+
 
         String requestUrl = baseUrl
                 + "?key=" + apiKey
