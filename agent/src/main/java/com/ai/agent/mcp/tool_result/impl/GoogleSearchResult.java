@@ -17,8 +17,8 @@ public class GoogleSearchResult extends ToolResult {
         results.add(info);
     }
 
-    public void add(String title, String snippet) {
-        results.add(new SearchInfo(title, snippet));
+    public void add(String title, String snippet, String link) {
+        results.add(new SearchInfo(title, snippet, link));
     }
 
     public static class SearchInfo {
