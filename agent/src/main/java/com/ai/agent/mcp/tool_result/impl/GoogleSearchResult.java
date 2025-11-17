@@ -24,10 +24,12 @@ public class GoogleSearchResult extends ToolResult {
     public static class SearchInfo {
         private String title;
         private String snippet;
+        private String link;
 
-        public SearchInfo(String title, String snippet) {
+        public SearchInfo(String title, String snippet, String link) {
             this.title = title;
             this.snippet = snippet;
+            this.link = link;
         }
 
         public String getTitle() {
@@ -36,6 +38,10 @@ public class GoogleSearchResult extends ToolResult {
 
         public String getSnippet() {
             return snippet;
+        }
+
+        public String getLink() {
+            return link;
         }
     }
 }
