@@ -3,3 +3,7 @@
 google_search:
   name: google_search
   description: Performs Google Search and returns the results
+
+web_scraper:
+  name: web_scraper
+  description: Fetches the text content from the website
