@@ -80,8 +80,8 @@ public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQu
                 for (Map<String, Object> item : items) {
                     String title = (String) item.get("title");
                     String snippet = (String) item.get("snippet");
-
-                    finalResults.add(title, snippet);
+                    String link = (String) item.get("link");
+                    finalResults.add(title, snippet, link);
 
                 }
             }
