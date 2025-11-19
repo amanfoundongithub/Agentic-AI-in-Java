@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.UUID;
-
 
 /**
  * Abstract implementation of the HTTP method for the LLMService
@@ -43,7 +39,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     public LLMResponse generate(LLMRequest request) {
 
         // Log the request received
-        llmLogger.info("\tINFO: Request with requestId {} Received for LLM Answer Generation", request.getRequestId());
+        llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Received", request.getRequestId());
 
         // Tell that we are starting to generate answer
         llmLogger.info("\tINFO: Starting the generation...");
@@ -76,7 +72,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
             llmLogger.error("\tERROR: {}", e.getMessage());
             response.setErrorMessage(e.getMessage());
         } finally {
-            llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Completed", request.getRequestId());
+            llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Completed\n", request.getRequestId());
         }
 
         return response;
