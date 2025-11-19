@@ -1,5 +1,7 @@
 package com.ai.agent.llm.dto;
 
+import java.util.UUID;
+
 public class LLMRequest {
 
     // Audit details for tracking the request
@@ -8,6 +10,16 @@ public class LLMRequest {
     // Meta data present in the request
     private String prompt;
     private String systemPrompt;
+
+    public LLMRequest() {
+
+    }
+
+    public LLMRequest(String prompt, String systemPrompt) {
+        this.requestId = UUID.randomUUID().toString();
+        this.prompt = prompt;
+        this.systemPrompt = systemPrompt;
+    }
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
