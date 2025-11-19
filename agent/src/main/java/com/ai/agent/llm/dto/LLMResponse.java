@@ -19,6 +19,18 @@ public class LLMResponse {
         this.requestDate = LocalDateTime.now();
     }
 
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
