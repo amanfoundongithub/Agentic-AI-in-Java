@@ -1,7 +1,6 @@
 from fastapi.routing import APIRouter
 from fastapi.responses import JSONResponse
 
-
 from models.LLMGenerationRequest import LLMGenerationRequest
 from service import OllamaService
 
