@@ -3,27 +3,19 @@ package com.ai.agent.react;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
 class MemoryContextTest {
 
-    @Mock
-    private MemoryContext memoryContext;
-
     @Test
     void testMemoryContext() {
 
-        // Check if the array is correctly configured or not
-        MemoryContext.Memory memorySample = new MemoryContext.Memory("user", "this is user string");
-        when(memoryContext.getContext()).thenReturn(List.of(memorySample));
+        // Define a new instance
+        MemoryContext memoryContext = new MemoryContext();
 
         // Add samples to check
         memoryContext.add("user", "hello this is message 1");
