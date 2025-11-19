@@ -1,0 +1,39 @@
+name: Ollama Service Workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Ollama Service/**"
+      - ".github/workflows/python-ollama.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Ollama Service/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        working-directory: ./Ollama Service
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run tests
+        working-directory: ./Ollama Service
+        run: |
+          if [ -d tests ]; then pytest -q; else echo "No tests found"; fi
