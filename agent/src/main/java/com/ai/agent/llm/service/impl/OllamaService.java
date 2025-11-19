@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAPIResponse> {
 
-    @Value("${ollama.api.url}")
+    @Value("${ollama_service.url}")
     private String requestUrl;
 
     @Value("${ollama_service.model}")
@@ -42,6 +42,4 @@ public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAP
         req.systemPrompt = request.getSystemPrompt();
         return req;
     }
-
-
 }
