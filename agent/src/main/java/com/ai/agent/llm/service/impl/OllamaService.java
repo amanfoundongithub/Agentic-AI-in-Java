@@ -1,36 +1,46 @@
 package com.ai.agent.llm.service.impl;
 
-import com.ai.agent.config.LLMConfig;
+import com.ai.agent.llm.dto.LLMRequest;
 import com.ai.agent.llm.dto.LLMResponse;
-import com.ai.agent.llm.dto.http.OllamaAPIResponse;
+import com.ai.agent.llm.dto.http.impl.OllamaAPIRequest;
+import com.ai.agent.llm.dto.http.impl.OllamaAPIResponse;
 import com.ai.agent.llm.service.LLMAbstractService;
+
 import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OllamaService extends LLMAbstractService<OllamaAPIResponse> {
+public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAPIResponse> {
 
     @Value("${ollama.api.url}")
     private String requestUrl;
 
+    @Value("${ollama_service.model}")
+    private String requestModel;
+
     @PostConstruct
     public void init() {
         this.url = requestUrl;
+        this.model = requestModel;
         this.responseClass = OllamaAPIResponse.class;
     }
 
     @Override
-    public String model() {
-        return LLMConfig.OLLAMA_MODEL_NAME;
-    }
-
-    @Override
-    protected LLMResponse convert(OllamaAPIResponse response) {
+    protected LLMResponse convertResponse(OllamaAPIResponse response) {
         LLMResponse res = new LLMResponse();
         res.setGenerated(true);
         res.setText(response.content.message.content);
         return res;
+    }
+
+    @Override
+    protected OllamaAPIRequest convertRequest(LLMRequest request) {
+        OllamaAPIRequest req = new OllamaAPIRequest();
+        req.prompt = request.getPrompt();
+        req.systemPrompt = request.getSystemPrompt();
+        return req;
     }
 
 
