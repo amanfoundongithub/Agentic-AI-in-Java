@@ -2,8 +2,20 @@ package com.ai.agent.llm.dto;
 
 public class LLMRequest {
 
+    // Audit details for tracking the request
+    private String requestId;
+
+    // Meta data present in the request
     private String prompt;
     private String systemPrompt;
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
 
     public void setPrompt(String prompt) {
         this.prompt = prompt;
