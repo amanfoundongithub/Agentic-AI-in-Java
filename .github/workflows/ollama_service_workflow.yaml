@@ -4,15 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "Ollama Service/**"
-      - ".github/workflows/python-ollama.yml"
 
   pull_request:
     branches:
       - main
-    paths:
-      - "Ollama Service/**"
 
 jobs:
   build:
