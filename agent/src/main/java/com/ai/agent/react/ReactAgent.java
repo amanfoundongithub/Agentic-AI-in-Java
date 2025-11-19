@@ -38,11 +38,15 @@ public class ReactAgent {
 
     public LLMResponse generate(LLMRequest request, String model) {
 
-        // Logging In Successfully!
-        LOGGER.info("Received Request {} for model {} for ReACT Agent", request, model);
+        // Request is received!
+        LOGGER.info("INFO: Request with requestId {} for agent (model = {}) RECEIVED", request.getRequestId(), model);
 
-        // LLM Response
+        // Logging In Successfully!
+        LOGGER.info("INFO: Starting Generation Below...\n");
+
+        // Create an LLM Response for the Agent and populate default values
         LLMResponse finalResponse = new LLMResponse();
+        finalResponse.setRequestId(request.getRequestId());
         finalResponse.setGenerated(false);
 
         // Get a ReACT prompt for system
@@ -130,12 +134,12 @@ public class ReactAgent {
             }
 
         } catch (Exception e) {
-            LOGGER.error("ERROR in generating Agent response : {}", e.getMessage());
+            LOGGER.error("ERROR: {}", e.getMessage());
+            finalResponse.setErrorMessage(e.getMessage());
         } finally {
-            LOGGER.info("Completed Request {} for ReACT Agent", request);
+            LOGGER.info("INFO: Request with requestId {} for agent (model = {}) COMPLETED", request.getRequestId(), model);
         }
 
-        finalResponse.setText("AGENT COULD NOT GENERATE RESPONSE, AS MAXIMUM ITERATIONS ARE REACHED");
         return finalResponse;
     }
 
