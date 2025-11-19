@@ -87,15 +87,18 @@ public class ReactAgent {
                 // Call service to generate response
                 LLMResponse newResponse = service.generate(newRequest);
 
-                // Get text, if it is not there, it means LLM failed to generate so retry again
-                String text = newResponse.getText();
-                if(text == null) {
+                // If the response says LLM failed to generate, then we can retry to generate again
+                if(!newResponse.isGenerated()) {
                     continue;
                 }
 
+                // Extract text and add to the memory
+                String text = newResponse.getText();
                 memory.add(AgentConfig.GENERATED_ANSWER, text);
 
-                // The tag for the final answer?
+                // ANALYSIS OF THE GENERATED RESPONSE
+                // IS BEING DONE BELOW
+
                 if(text.contains("</" + AgentConfig.FINAL_TAG + ">")) {
 
                     // Get the final answer
@@ -181,8 +184,5 @@ public class ReactAgent {
             ==========================""" + availableTools + "==========================\n" +
                 "Use these tools when needed. If not needed, go to <final>.\n";
     }
-
-
-
 
 }
