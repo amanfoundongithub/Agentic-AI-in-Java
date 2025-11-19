@@ -37,9 +37,6 @@ public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAP
 
     @Override
     protected OllamaAPIRequest convertRequest(LLMRequest request) {
-        OllamaAPIRequest req = new OllamaAPIRequest();
-        req.prompt = request.getPrompt();
-        req.systemPrompt = request.getSystemPrompt();
-        return req;
+        return new OllamaAPIRequest(request.getPrompt(), request.getSystemPrompt());
     }
 }
