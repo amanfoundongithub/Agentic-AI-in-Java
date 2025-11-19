@@ -4,4 +4,5 @@
 ollama_service:
   model: llama3.2
   description: Ollama service for LLM
+  url: http://127.0.0.1:8000/api/llm/generate
 
