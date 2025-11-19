@@ -9,3 +9,4 @@ spring:
     import:
       - "application-secret.yaml"
       - "application-tool.yaml"
+      - "application-llm.yaml"
