@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class ReactAgent {
 
@@ -81,10 +83,8 @@ public class ReactAgent {
                 // Create a prompt based on context
                 String reactPrompt = memory.toString();
 
-                // Create a new request for the LLM
-                LLMRequest newRequest = new LLMRequest();
-                newRequest.setPrompt(reactPrompt);
-                newRequest.setSystemPrompt(sysReactPrompt);
+                // Create a new request for the LLM with parameters
+                LLMRequest newRequest = new LLMRequest(reactPrompt, sysReactPrompt);
 
                 // Call service to generate response
                 LLMResponse newResponse = service.generate(newRequest);
