@@ -1,9 +1,20 @@
+#######################################################################################
+# This is a file that contains all the configuration details related to tools         #
+# in the MCP server. Use this file to store all relevant (public) information         #
+# regarding the tools so that it is always easier to modify details as per the        #
+# needs of the agent.                                                                 #
+#                                                                                     #
+# Author : amanfoundongithub                                                          #
+#######################################################################################
 
-# Google Search Tool
+
+
+# Google Search Tool (Google Engine)
 google_search:
   name: google_search
   description: Performs Google Search and returns the results
 
+# Web Scrapper (JSOUP implementation)
 web_scraper:
   name: web_scraper
   description: Fetches the text content from the website
