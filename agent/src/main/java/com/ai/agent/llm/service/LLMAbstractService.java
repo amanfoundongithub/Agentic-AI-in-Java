@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
+
 
 /**
  * Abstract implementation of the HTTP method for the LLMService
@@ -39,13 +43,20 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     public LLMResponse generate(LLMRequest request) {
 
         // Log the request received
-        llmLogger.info("Request {} for LLM Generation Received", request);
+        llmLogger.info("\tINFO: Request with requestId {} Received for LLM Answer Generation", request.getRequestId());
 
-        // Create a response object to be sent
+        // Tell that we are starting to generate answer
+        llmLogger.info("\tINFO: Starting the generation...");
+
+        // Create a response object to be sent back, populate with default values
         LLMResponse response = new LLMResponse();
+
+        response.setRequestId(request.getRequestId());
         response.setGenerated(false);
 
+        // Main service loop begins here
         try {
+
             // Get the headers and add to the body
             HttpHeaders headers = getHeaders();
             HttpEntity<Q> httpEntity = new HttpEntity<>(convertRequest(request), headers);
@@ -58,13 +69,14 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
                     responseClass
             );
 
-            // Send the body converted
+            // Replace with converted body for the ease of use
             response = convertResponse(responseEntity.getBody());
 
         } catch (Exception e) {
-            llmLogger.error("Error In Processing Request: {}", e.getMessage());
+            llmLogger.error("\tERROR: {}", e.getMessage());
+            response.setErrorMessage(e.getMessage());
         } finally {
-            llmLogger.info("Request {} for LLM Generation Completed", request);
+            llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Completed", request.getRequestId());
         }
 
         return response;
