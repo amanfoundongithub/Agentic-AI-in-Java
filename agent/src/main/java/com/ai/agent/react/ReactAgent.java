@@ -1,7 +1,7 @@
 package com.ai.agent.react;
 
 import com.ai.agent.config.AgentConfig;
-import com.ai.agent.exception.LLMNotFoundException;
+import com.ai.agent.exception.MaxAttemptsReachedException;
 import com.ai.agent.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
 import com.ai.agent.llm.dto.LLMRequest;
@@ -15,8 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class ReactAgent {
@@ -89,8 +87,12 @@ public class ReactAgent {
                 // Call service to generate response
                 LLMResponse newResponse = service.generate(newRequest);
 
-                // Get text and add to the memory
+                // Get text, if it is not there, it means LLM failed to generate so retry again
                 String text = newResponse.getText();
+                if(text == null) {
+                    continue;
+                }
+
                 memory.add(AgentConfig.GENERATED_ANSWER, text);
 
                 // The tag for the final answer?
@@ -135,6 +137,9 @@ public class ReactAgent {
 
 
             }
+
+            // LLM has exceeded the number of attempts so it makes sense to throw an error here
+            throw new MaxAttemptsReachedException(AgentConfig.MAX_ITERATIONS);
 
         }
         catch (Exception e) {
