@@ -1,0 +1,7 @@
+
+
+# Ollama Service Configurations
+ollama_service:
+  model: llama3.2
+  description: Ollama service for LLM
+
