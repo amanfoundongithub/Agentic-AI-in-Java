@@ -1,6 +1,7 @@
 package com.ai.agent.react;
 
 import com.ai.agent.config.AgentConfig;
+import com.ai.agent.exception.LLMNotFoundException;
 import com.ai.agent.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
 import com.ai.agent.llm.dto.LLMRequest;
@@ -52,30 +53,32 @@ public class ReactAgent {
         // Get a ReACT prompt for system
         String sysReactPrompt = createSystemPrompt();
 
+        // Create an LLM memory context to store relevant information
+        MemoryContext memory = new MemoryContext();
+
         try {
-            // Fetch the service
+
+            // Fetch the service, throws exception if not there
             LLMService service = llmContext.get(model);
 
-            // Create a LLM memory
-            MemoryContext memory = new MemoryContext();
+            // User Prompt Addition (error if not there)
+            String userPrompt = request.getPrompt();
+            if(userPrompt != null) {
+                memory.add(AgentConfig.USER_PROMPT, userPrompt);
+            } else {
+                throw new UserPromptNotPresentException();
+            }
 
-            // System Prompt Addition
+            // System Prompt Addition (if exists, otherwise fine)
             String sysPrompt  = request.getSystemPrompt();
             if(sysPrompt != null) {
                 memory.add(AgentConfig.SYSTEM_PROMPT, sysPrompt);
             }
 
-            // User Prompt Addition
-            String userPrompt = request.getPrompt();
-            if(userPrompt == null) {
-                throw new UserPromptNotPresentException();
-            }
-            memory.add(AgentConfig.USER_PROMPT, userPrompt);
-
             // Iterate over the agent's iterations for reasoning
             for(int i = 0; i < AgentConfig.MAX_ITERATIONS ; i++) {
 
-                // Create a prompt
+                // Create a prompt based on context
                 String reactPrompt = memory.toString();
 
                 // Create a new request for the LLM
@@ -133,7 +136,8 @@ public class ReactAgent {
 
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("ERROR: {}", e.getMessage());
             finalResponse.setErrorMessage(e.getMessage());
         } finally {
