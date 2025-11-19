@@ -2,6 +2,8 @@ package com.ai.agent.llm.service;
 
 import com.ai.agent.llm.dto.LLMRequest;
 import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.llm.dto.http.LLMHttpRequest;
+import com.ai.agent.llm.dto.http.LLMHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -13,27 +15,26 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author amanfoundongithub
  *
- * @param <H> The HTTP response model expected for the API response
+ * @param <R> The HTTP response model expected for the API response
+ * @param <Q> The HTTP request  model expected for the API request
  */
-public abstract class LLMAbstractService<H> implements LLMService {
+public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLMHttpResponse> implements LLMService {
 
-    // Rest Template
+    // Rest Template for REST exchange
     protected static final RestTemplate restTemplate = new RestTemplate();
 
-    // Logger
+    // Logger to log details from the LLM
     protected final Logger llmLogger = LoggerFactory.getLogger(getClass());
 
+    // Variables to be injected
     protected String url;
-    protected Class<H> responseClass;
+    protected String model;
+    protected Class<R> responseClass;
 
 
-    protected HttpHeaders getHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return headers;
+    public String model() {
+        return model;
     }
-
-    protected abstract LLMResponse convert(H response);
 
     public LLMResponse generate(LLMRequest request) {
 
@@ -47,10 +48,10 @@ public abstract class LLMAbstractService<H> implements LLMService {
         try {
             // Get the headers and add to the body
             HttpHeaders headers = getHeaders();
-            HttpEntity<LLMRequest> httpEntity = new HttpEntity<>(request, headers);
+            HttpEntity<Q> httpEntity = new HttpEntity<>(convertRequest(request), headers);
 
             // POST request sent
-            ResponseEntity<H> responseEntity = restTemplate.exchange(
+            ResponseEntity<R> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     httpEntity,
@@ -58,7 +59,7 @@ public abstract class LLMAbstractService<H> implements LLMService {
             );
 
             // Send the body converted
-            response = convert(responseEntity.getBody());
+            response = convertResponse(responseEntity.getBody());
 
         } catch (Exception e) {
             llmLogger.error("Error In Processing Request: {}", e.getMessage());
@@ -68,4 +69,18 @@ public abstract class LLMAbstractService<H> implements LLMService {
 
         return response;
     }
+
+
+    // Helper function to get headers
+    protected HttpHeaders getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
+
+    // Auxiliary function to convert HTTP Response to desired response
+    protected abstract LLMResponse convertResponse(R response);
+
+    // Auxiliary function to convert request to desired HTTP Request
+    protected abstract Q convertRequest(LLMRequest request);
 }
