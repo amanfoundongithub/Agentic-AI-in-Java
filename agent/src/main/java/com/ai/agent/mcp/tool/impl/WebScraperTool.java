@@ -1,8 +1,8 @@
 package com.ai.agent.mcp.tool.impl;
 
 import com.ai.agent.mcp.tool.ToolAbstract;
-import com.ai.agent.mcp.tool_query.impl.WebScrapingQuery;
-import com.ai.agent.mcp.tool_result.impl.WebScrapingResult;
+import com.ai.agent.mcp.tool.query.impl.WebScrapingQuery;
+import com.ai.agent.mcp.tool.result.impl.WebScrapingResult;
 import jakarta.annotation.PostConstruct;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

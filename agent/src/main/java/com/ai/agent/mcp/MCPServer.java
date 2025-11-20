@@ -1,7 +1,7 @@
 package com.ai.agent.mcp;
 
 import com.ai.agent.mcp.tool.Tool;
-import com.ai.agent.mcp.tool_query.ToolQuery;
+import com.ai.agent.mcp.tool.query.ToolQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

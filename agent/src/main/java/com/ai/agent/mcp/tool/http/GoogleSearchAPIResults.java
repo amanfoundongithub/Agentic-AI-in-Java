@@ -1,4 +1,4 @@
-package com.ai.agent.mcp.tool_http;
+package com.ai.agent.mcp.tool.http;
 
 import java.util.List;
 import java.util.Map;

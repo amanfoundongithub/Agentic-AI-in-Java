@@ -1,6 +1,6 @@
-package com.ai.agent.mcp.tool_query.impl;
+package com.ai.agent.mcp.tool.query.impl;
 
-import com.ai.agent.mcp.tool_query.ToolQuery;
+import com.ai.agent.mcp.tool.query.ToolQuery;
 
 public class GoogleSearchQuery extends ToolQuery {
 

@@ -1,7 +1,7 @@
 package com.ai.agent.mcp.tool;
 
-import com.ai.agent.mcp.tool_query.ToolQuery;
-import com.ai.agent.mcp.tool_result.ToolResult;
+import com.ai.agent.mcp.tool.query.ToolQuery;
+import com.ai.agent.mcp.tool.result.ToolResult;
 
 /**
  * A generic interface for tools used in MCP.

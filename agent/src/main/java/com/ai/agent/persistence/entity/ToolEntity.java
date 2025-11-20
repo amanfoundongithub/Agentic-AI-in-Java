@@ -1,7 +1,7 @@
 package com.ai.agent.persistence.entity;
 
-import com.ai.agent.mcp.tool_query.ToolQuery;
-import com.ai.agent.mcp.tool_result.ToolResult;
+import com.ai.agent.mcp.tool.query.ToolQuery;
+import com.ai.agent.mcp.tool.result.ToolResult;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

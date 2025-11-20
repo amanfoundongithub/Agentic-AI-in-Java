@@ -1,9 +1,9 @@
 package com.ai.agent.mcp.tool.impl;
 
-import com.ai.agent.common.exception.ResultsNotFound;
+import com.ai.agent.core.exception.ResultsNotFound;
 import com.ai.agent.mcp.tool.ToolAbstract;
-import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
-import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
+import com.ai.agent.mcp.tool.query.impl.GoogleSearchQuery;
+import com.ai.agent.mcp.tool.result.impl.GoogleSearchResult;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

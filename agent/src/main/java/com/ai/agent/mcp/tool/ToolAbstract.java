@@ -1,9 +1,9 @@
 package com.ai.agent.mcp.tool;
 
-import com.ai.agent.mcp.tool_query.ToolQuery;
-import com.ai.agent.mcp.tool_result.ToolResult;
-import com.ai.agent.repository.dao.ToolEntityDao;
-import com.ai.agent.repository.document.ToolEntity;
+import com.ai.agent.mcp.tool.query.ToolQuery;
+import com.ai.agent.mcp.tool.result.ToolResult;
+import com.ai.agent.persistence.dao.ToolEntityDao;
+import com.ai.agent.persistence.entity.ToolEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
