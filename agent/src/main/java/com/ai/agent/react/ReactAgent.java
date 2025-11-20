@@ -2,7 +2,7 @@ package com.ai.agent.react;
 
 import com.ai.agent.common.utils.LLMRequestValidator;
 import com.ai.agent.common.utils.TextSlicer;
-import com.ai.agent.config.AgentConfig;
+import com.ai.agent.common.config.AgentConfig;
 import com.ai.agent.common.exception.MaxAttemptsReachedException;
 import com.ai.agent.common.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
