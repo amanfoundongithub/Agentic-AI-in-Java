@@ -30,7 +30,6 @@ public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAP
     @Override
     protected LLMResponse convertResponse(OllamaAPIResponse response) {
         LLMResponse res = new LLMResponse();
-        res.setGenerated(true);
         res.setText(response.content.message.content);
         return res;
     }
