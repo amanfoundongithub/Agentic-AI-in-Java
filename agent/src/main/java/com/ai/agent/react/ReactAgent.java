@@ -1,18 +1,18 @@
 package com.ai.agent.react;
 
-import com.ai.agent.common.utils.LLMRequestValidator;
-import com.ai.agent.common.utils.TextSlicer;
-import com.ai.agent.common.config.AgentConfig;
-import com.ai.agent.common.exception.MaxAttemptsReachedException;
-import com.ai.agent.common.exception.UserPromptNotPresentException;
+import com.ai.agent.core.util.LLMRequestValidator;
+import com.ai.agent.core.util.TextSlicer;
+import com.ai.agent.core.config.AgentConfig;
+import com.ai.agent.core.exception.MaxAttemptsReachedException;
+import com.ai.agent.core.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
 import com.ai.agent.llm.dto.LLMRequest;
 import com.ai.agent.llm.dto.LLMResponse;
 import com.ai.agent.llm.service.LLMService;
 import com.ai.agent.mcp.MCPServer;
 import com.ai.agent.mcp.tool.Tool;
-import com.ai.agent.mcp.tool_query.ToolQuery;
-import com.ai.agent.mcp.tool_result.ToolResult;
+import com.ai.agent.mcp.tool.query.ToolQuery;
+import com.ai.agent.mcp.tool.result.ToolResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.ai.agent.llm;
 
-import com.ai.agent.common.exception.LLMNotFoundException;
+import com.ai.agent.core.exception.LLMNotFoundException;
 import com.ai.agent.llm.service.LLMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
