@@ -67,5 +67,5 @@ we never really tested on the edge cases for the agent.
 ## Updates:
 - **November 20, 2025**
   - Port changed from 5200 to 6900. 
-  - Migration from RestTemplate to WebClient completed for `LLMService`(recommended by Spring)  
-  - MongoDB logging completed for `LLMService` 
+  - Migration from RestTemplate to WebClient completed for entire codebase
+  - MongoDB logging completed for `LLMService` and `Tool`
