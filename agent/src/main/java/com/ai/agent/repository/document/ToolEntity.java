@@ -35,6 +35,9 @@ public class ToolEntity {
     @Field(name = "result")
     private ToolResult result;
 
+    @Field(name = "error")
+    private String errorMessage;
+
     // ---- Getters and Setters ----
 
     public String getId() {
@@ -99,5 +102,13 @@ public class ToolEntity {
 
     public void setResult(ToolResult result) {
         this.result = result;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
