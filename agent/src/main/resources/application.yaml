@@ -1,12 +1,24 @@
-# Server configured to port 5200
-server:
-  port: 5200
 
 
-# Spring configurations to include secret YAML file
+
+# Spring configuration
 spring:
+  application:
+    name: agent
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: agentic_ai
+
   config:
     import:
       - "application-secret.yaml"
       - "application-tool.yaml"
       - "application-llm.yaml"
+
+
+# Server configured to port 5475
+server:
+  port: 5200
