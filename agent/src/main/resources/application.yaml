@@ -19,6 +19,10 @@ spring:
       - "application-llm.yaml"
 
 
-# Server configured to port 5475
+# Server configured to port 6900
 server:
-  port: 5200
+  port: 6900
+
+# WebClient configurations
+web_client:
+  timeoutInSeconds: 20
