@@ -1,4 +1,4 @@
-package com.ai.agent.config;
+package com.ai.agent.common.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
