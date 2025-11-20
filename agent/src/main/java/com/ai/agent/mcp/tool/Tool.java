@@ -25,6 +25,6 @@ public interface Tool<R extends ToolResult, Q extends ToolQuery>{
      * @param query The entity that contains the requested action items for the tool
      * @return Response from the tool
      */
-    R execute(Q query);
+    R execute(Q query, String sessionId);
 
 }
