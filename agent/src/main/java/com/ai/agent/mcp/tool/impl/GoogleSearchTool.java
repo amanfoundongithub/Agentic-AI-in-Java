@@ -5,24 +5,16 @@ import com.ai.agent.mcp.tool.ToolAbstract;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
 import jakarta.annotation.PostConstruct;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.ClientResponse;
 
 import java.util.List;
 import java.util.Map;
 
-
 @Component
 public class GoogleSearchTool extends ToolAbstract<GoogleSearchResult, GoogleSearchQuery> {
-
-    // Rest Template
-    private static final RestTemplate restTemplate = new RestTemplate();
-
-    // Logger for logging tool requests
-    private static final Logger LOGGER = LoggerFactory.getLogger(GoogleSearchTool.class);
 
     @Value("${google.api.key}")
     private String apiKey;
@@ -47,44 +39,52 @@ public class GoogleSearchTool extends ToolAbstract<GoogleSearchResult, GoogleSea
     }
 
     @Override
-    public GoogleSearchResult execute(GoogleSearchQuery query) {
-
-        LOGGER.info("Request {} for Google Search Received", query);
+    protected GoogleSearchResult processingLogic(GoogleSearchQuery query) {
+        //
         GoogleSearchResult finalResults = new GoogleSearchResult();
 
-        try {
+        // Make a request URL
+        String requestUrl = baseUrl
+                + "?key=" + apiKey
+                + "&cx=" + cx
+                + "&q=" + query.getQuery();
 
-            // Make a request URL
-            String requestUrl = baseUrl
-                    + "?key=" + apiKey
-                    + "&cx=" + cx
-                    + "&q=" + query.getQuery();
+        // Send GET request
+        Map<String, Object> results = webClient
+                .get()
+                .uri(requestUrl)
+                .retrieve()
+                .onStatus(
+                        status -> status.is4xxClientError() || status.is5xxServerError(),
+                        ClientResponse::createException
+                )
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                .block();
 
-            // Send GET request
-            Map results = restTemplate.getForObject(requestUrl, Map.class);
-            if(results == null) {
-                throw new ResultsNotFound("Google Search");
-            }
-
-            List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
-
-            if (items != null) {
-                for (Map<String, Object> item : items) {
-                    String title = (String) item.get("title");
-                    String snippet = (String) item.get("snippet");
-                    String link = (String) item.get("link");
-                    finalResults.add(title, snippet, link);
-
-                }
-            }
-
-        } catch (Exception e) {
-            LOGGER.error("Error in Google Search : {}", e.getMessage());
-        } finally {
-            LOGGER.info("Request {} for Google Search Completed", query);
+        if (results == null) {
+            throw new ResultsNotFound("Google Search");
         }
 
-        return finalResults;
+        // Extract items
+        List<Map<String, Object>> items = (List<Map<String, Object>>) results.get("items");
 
+        if (items != null) {
+            for (Map<String, Object> item : items) {
+                String title = (String) item.get("title");
+                String snippet = (String) item.get("snippet");
+                String link = (String) item.get("link");
+                finalResults.add(title, snippet, link);
+
+            }
+            return finalResults;
+
+        } else {
+            throw new ResultsNotFound("Google Search");
+        }
+    }
+
+    @Override
+    protected GoogleSearchResult processingError() {
+        return new GoogleSearchResult();
     }
 }
