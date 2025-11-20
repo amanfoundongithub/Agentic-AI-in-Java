@@ -9,5 +9,3 @@ Useful Links to get started:
 - [Python Setup](https://github.com/amanfoundongithub/Agentic-AI-in-Java/blob/main/Ollama%20Service/README.md)
 
 For any suggestions regarding this repository, feel free to reach out by any of the social media handles or raise a PR for the same!
-
-**Note**: _Currently some changes are being implemented, so the built is broken. I will remove this update once all the changes are completed!_
