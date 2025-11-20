@@ -1,8 +1,8 @@
-package com.ai.agent.llm.dto;
+package com.ai.agent.core.api;
 
 import java.time.LocalDateTime;
 
-public class LLMResponse {
+public class AnswerGenerationResponse {
 
     // Audit details
     private String requestId;
@@ -15,7 +15,7 @@ public class LLMResponse {
     // Generated text
     private String text;
 
-    public LLMResponse() {
+    public AnswerGenerationResponse() {
         this.requestDate = LocalDateTime.now();
     }
 
