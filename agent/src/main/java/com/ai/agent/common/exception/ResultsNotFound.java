@@ -1,4 +1,4 @@
-package com.ai.agent.exception;
+package com.ai.agent.common.exception;
 
 public class ResultsNotFound extends RuntimeException {
 
