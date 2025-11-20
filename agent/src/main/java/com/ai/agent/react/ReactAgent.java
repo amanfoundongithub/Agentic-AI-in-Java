@@ -1,5 +1,7 @@
 package com.ai.agent.react;
 
+import com.ai.agent.common.LLMRequestValidator;
+import com.ai.agent.common.TextSlicer;
 import com.ai.agent.config.AgentConfig;
 import com.ai.agent.exception.MaxAttemptsReachedException;
 import com.ai.agent.exception.UserPromptNotPresentException;
@@ -57,6 +59,7 @@ public class ReactAgent {
         MemoryContext memory = new MemoryContext();
 
         try {
+            LLMRequestValidator.validate(request);
 
             // Fetch the service, throws exception if not there
             LLMService service = llmContext.get(model);
@@ -102,7 +105,7 @@ public class ReactAgent {
                 if(text.contains("</" + AgentConfig.FINAL_TAG + ">")) {
 
                     // Get the final answer
-                    String finalAnswer = AgentConfig.extractTextBetweenTags(text, AgentConfig.FINAL_TAG);
+                    String finalAnswer = TextSlicer.sliceTextBetweenTags(text, AgentConfig.FINAL_TAG);
 
                     // Set the fields of the response
                     finalResponse.setGenerated(true);
@@ -113,8 +116,8 @@ public class ReactAgent {
                 } else if(text.contains("</" + AgentConfig.ACTION_TAG + ">")) {
 
                     // Extract the action item and the query
-                    String actionItem = AgentConfig.getActionNameFromText(text);
-                    String jsonQuery  = AgentConfig.getActionJSONFromText(text);
+                    String actionItem = TextSlicer.sliceActionNameFromText(text);
+                    String jsonQuery  = TextSlicer.sliceActionJSONFromText(text);
 
                     // Try to get response from the tool
                     try {
