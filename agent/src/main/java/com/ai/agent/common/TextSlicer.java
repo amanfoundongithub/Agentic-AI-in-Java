@@ -22,13 +22,10 @@ public class TextSlicer {
         }
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
-            // defensive: ensure group exists
-            if (matcher.groupCount() >= grpIndex) {
-                return matcher.group(grpIndex).trim();
-            }
+            return matcher.group(grpIndex).trim();
+        } else {
             return null;
         }
-        return null;
     }
 
     public static String sliceActionNameFromText(String text) {
