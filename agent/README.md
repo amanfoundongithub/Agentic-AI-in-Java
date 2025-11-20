@@ -63,3 +63,9 @@ LLMs in future without changing the core ReACT logic.
 
 Moreover, no test cases have been written for the agent, which does seems troubling since
 we never really tested on the edge cases for the agent. 
+
+## Updates:
+- **November 20, 2025**
+  - Port changed from 5200 to 6900. 
+  - Migration from RestTemplate to WebClient (recommended by Spring)
+  - MongoDB integration to the application
