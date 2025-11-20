@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 
 /**
@@ -26,8 +26,8 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     @Autowired
     LLMEntityDao llmEntityDao;
 
-    // Rest Template for REST exchange
-    protected static final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    WebClient webClient;
 
     // Logger to log details from the LLM
     protected final Logger llmLogger = LoggerFactory.getLogger(getClass());
@@ -58,20 +58,22 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
         // Main service loop begins here
         try {
 
-            // Get the headers and add to the body
-            HttpHeaders headers = getHeaders();
-            HttpEntity<Q> httpEntity = new HttpEntity<>(convertRequest(request), headers);
+            // Send API using WebClient
+            R responseEntity = webClient
+                    .post()
+                    .uri(url)
+                    .headers(h -> h.addAll(getHeaders()))
+                    .bodyValue(convertRequest(request))
+                    .retrieve()
+                    .bodyToMono(responseClass)
+                    .block();
 
-            // POST request sent
-            ResponseEntity<R> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    httpEntity,
-                    responseClass
-            );
+            // Convert main fields for safety
+            LLMResponse dupResponse = convertResponse(responseEntity);
 
-            // Replace with converted body for the ease of use
-            response = convertResponse(responseEntity.getBody());
+            // Set up the text and generated status
+            response.setGenerated(true);
+            response.setText(dupResponse.getText());
 
         } catch (Exception e) {
             llmLogger.error("\tERROR: {}", e.getMessage());
