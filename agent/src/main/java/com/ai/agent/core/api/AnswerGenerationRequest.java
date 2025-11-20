@@ -1,8 +1,8 @@
-package com.ai.agent.llm.dto;
+package com.ai.agent.core.api;
 
 import java.util.UUID;
 
-public class LLMRequest {
+public class AnswerGenerationRequest {
 
     // Audit details for tracking the request
     private String requestId;
@@ -11,11 +11,11 @@ public class LLMRequest {
     private String prompt;
     private String systemPrompt;
 
-    public LLMRequest() {
+    public AnswerGenerationRequest() {
 
     }
 
-    public LLMRequest(String prompt, String systemPrompt) {
+    public AnswerGenerationRequest(String prompt, String systemPrompt) {
         this.requestId = UUID.randomUUID().toString();
         this.prompt = prompt;
         this.systemPrompt = systemPrompt;
