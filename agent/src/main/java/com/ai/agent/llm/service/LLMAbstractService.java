@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 
 /**
@@ -75,8 +77,15 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
             response.setGenerated(true);
             response.setText(dupResponse.getText());
 
-        } catch (Exception e) {
-            llmLogger.error("\tERROR: {}", e.getMessage());
+        } catch (WebClientResponseException e) {
+            llmLogger.info("\tERROR: {} (Response)", e.getMessage());
+            response.setErrorMessage("API ERROR: " + e.getStatusCode() + "->" + e.getResponseBodyAsString());
+        } catch (WebClientRequestException e) {
+            llmLogger.info("\tERROR: {} (Request)", e.getMessage());
+            response.setErrorMessage("NETWORK ERROR: " + e.getMessage());
+        }
+        catch (Exception e) {
+            llmLogger.error("\tERROR: {} (System)", e.getMessage());
             response.setErrorMessage(e.getMessage());
         } finally {
             llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Completed\n", request.getRequestId());
