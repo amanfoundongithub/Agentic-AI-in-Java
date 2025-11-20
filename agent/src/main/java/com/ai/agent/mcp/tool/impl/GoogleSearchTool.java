@@ -1,6 +1,6 @@
 package com.ai.agent.mcp.tool.impl;
 
-import com.ai.agent.exception.ResultsNotFound;
+import com.ai.agent.common.exception.ResultsNotFound;
 import com.ai.agent.mcp.tool.ToolAbstract;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;

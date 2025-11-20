@@ -1,10 +1,10 @@
 package com.ai.agent.react;
 
-import com.ai.agent.common.LLMRequestValidator;
-import com.ai.agent.common.TextSlicer;
+import com.ai.agent.common.utils.LLMRequestValidator;
+import com.ai.agent.common.utils.TextSlicer;
 import com.ai.agent.config.AgentConfig;
-import com.ai.agent.exception.MaxAttemptsReachedException;
-import com.ai.agent.exception.UserPromptNotPresentException;
+import com.ai.agent.common.exception.MaxAttemptsReachedException;
+import com.ai.agent.common.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
 import com.ai.agent.llm.dto.LLMRequest;
 import com.ai.agent.llm.dto.LLMResponse;
