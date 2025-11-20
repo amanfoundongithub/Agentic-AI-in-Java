@@ -1,4 +1,4 @@
-package com.ai.agent.common.utils;
+package com.ai.agent.core.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

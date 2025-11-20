@@ -1,6 +1,6 @@
-package com.ai.agent.common.utils;
+package com.ai.agent.core.util;
 
-import com.ai.agent.common.exception.InvalidRequest;
+import com.ai.agent.core.exception.InvalidRequest;
 import com.ai.agent.llm.dto.LLMRequest;
 
 
