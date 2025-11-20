@@ -1,8 +1,9 @@
 package com.ai.agent.mcp.tool.impl;
 
-import com.ai.agent.mcp.tool.Tool;
+import com.ai.agent.mcp.tool.ToolAbstract;
 import com.ai.agent.mcp.tool_query.impl.WebScrapingQuery;
 import com.ai.agent.mcp.tool_result.impl.WebScrapingResult;
+import jakarta.annotation.PostConstruct;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WebScraperTool implements Tool<WebScrapingResult, WebScrapingQuery> {
+public class WebScraperTool extends ToolAbstract<WebScrapingResult, WebScrapingQuery> {
 
     // Logger for logging tool requests
     private static final Logger LOGGER = LoggerFactory.getLogger(WebScraperTool.class);
@@ -22,19 +23,11 @@ public class WebScraperTool implements Tool<WebScrapingResult, WebScrapingQuery>
     @Value("${web_scraper.description}")
     private String toolDescription;
 
-    @Override
-    public String name() {
-        return toolName;
-    }
-
-    @Override
-    public String description() {
-        return toolDescription;
-    }
-
-    @Override
-    public Class<WebScrapingQuery> queryClass() {
-        return WebScrapingQuery.class;
+    @PostConstruct
+    public void init() {
+        this.name = toolName;
+        this.description = toolDescription;
+        this.queryClass = WebScrapingQuery.class;
     }
 
     @Override
