@@ -1,4 +1,4 @@
-package com.ai.agent.repository.document;
+package com.ai.agent.persistence.entity;
 
 import com.ai.agent.mcp.tool_query.ToolQuery;
 import com.ai.agent.mcp.tool_result.ToolResult;

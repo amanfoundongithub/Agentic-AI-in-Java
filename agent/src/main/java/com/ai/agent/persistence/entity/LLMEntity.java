@@ -1,4 +1,4 @@
-package com.ai.agent.repository.document;
+package com.ai.agent.persistence.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
