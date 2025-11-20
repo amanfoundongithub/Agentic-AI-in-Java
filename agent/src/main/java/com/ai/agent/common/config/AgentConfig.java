@@ -1,4 +1,4 @@
-package com.ai.agent.config;
+package com.ai.agent.common.config;
 
 public class AgentConfig {
 
