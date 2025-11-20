@@ -1,9 +1,10 @@
 package com.ai.agent.mcp.tool.impl;
 
 import com.ai.agent.exception.ResultsNotFound;
-import com.ai.agent.mcp.tool.Tool;
+import com.ai.agent.mcp.tool.ToolAbstract;
 import com.ai.agent.mcp.tool_query.impl.GoogleSearchQuery;
 import com.ai.agent.mcp.tool_result.impl.GoogleSearchResult;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 
 @Component
-public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQuery> {
+public class GoogleSearchTool extends ToolAbstract<GoogleSearchResult, GoogleSearchQuery> {
 
     // Rest Template
     private static final RestTemplate restTemplate = new RestTemplate();
@@ -38,20 +39,11 @@ public class GoogleSearchTool implements Tool<GoogleSearchResult, GoogleSearchQu
     @Value("${google_search.description}")
     private String toolDescription;
 
-
-    @Override
-    public String name() {
-        return toolName;
-    }
-
-    @Override
-    public String description() {
-        return toolDescription;
-    }
-
-    @Override
-    public Class<GoogleSearchQuery> queryClass() {
-        return GoogleSearchQuery.class;
+    @PostConstruct
+    public void init() {
+        this.name = toolName;
+        this.description = toolDescription;
+        this.queryClass = GoogleSearchQuery.class;
     }
 
     @Override
