@@ -23,6 +23,7 @@ public class TestController {
     public LLMResponse runAgent(@RequestBody AgentRunRequest request) {
 
         LLMRequest llmReq = new LLMRequest();
+        llmReq.setRequestId(request.getRequestId());
         llmReq.setPrompt(request.getPrompt());
         llmReq.setSystemPrompt(request.getSystemPrompt());
 
@@ -32,9 +33,18 @@ public class TestController {
 
     // DTO for request body
     public static class AgentRunRequest {
+        private String requestId;
         private String prompt;
         private String systemPrompt;
         private String model;
+
+        public void setRequestId(String requestId) {
+            this.requestId = requestId;
+        }
+
+        public String getRequestId() {
+            return requestId;
+        }
 
         public String getPrompt() { return prompt; }
         public void setPrompt(String prompt) { this.prompt = prompt; }
