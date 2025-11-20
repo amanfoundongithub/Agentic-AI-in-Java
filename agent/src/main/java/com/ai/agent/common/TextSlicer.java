@@ -7,35 +7,29 @@ public class TextSlicer {
 
     // Pattern for ACTION NAME
     private static final Pattern ACTION_NAME_PATTERN =
-            Pattern.compile("<action\\s+name=\"(.*?)\">",
-                    Pattern.MULTILINE);
+            Pattern.compile("<action\\s+name=\\\"(.*?)\\\">", Pattern.MULTILINE);
 
-    // Pattern for ACTION JSON
+    // Pattern for ACTION JSON (DOTALL so inner text can span newlines)
     private static final Pattern ACTION_JSON_PATTERN =
-            Pattern.compile("<action\\s+name=\"(.*?)\">([.]*?)</action>",
+            Pattern.compile("<action\\s+name=\\\"(.*?)\\\">([\\s\\S]*?)</action>",
                     Pattern.MULTILINE | Pattern.DOTALL);
 
     private TextSlicer() {}
 
     private static String extractUsingRegex(String text, Pattern pattern, int grpIndex) {
-
-        // Text null
-        if(text == null) {
+        if (text == null) {
             return null;
         }
-        // Match the regex to text
         Matcher matcher = pattern.matcher(text);
-
-        if(matcher.find()) {
-            return matcher.group(grpIndex).trim();
-        } else {
+        if (matcher.find()) {
+            // defensive: ensure group exists
+            if (matcher.groupCount() >= grpIndex) {
+                return matcher.group(grpIndex).trim();
+            }
             return null;
         }
+        return null;
     }
-
-
-
-
 
     public static String sliceActionNameFromText(String text) {
         return extractUsingRegex(text, ACTION_NAME_PATTERN, 1);
@@ -46,17 +40,14 @@ public class TextSlicer {
     }
 
     public static String sliceTextBetweenTags(String text, String tag) {
+        if (text == null || tag == null) return "";
         String open = "<" + tag + ">";
         String close = "</" + tag + ">";
-
         int start = text.indexOf(open);
-        int end = text.indexOf(close);
-
-        if (start == -1 || end == -1) {
+        int end = text.indexOf(close, start + open.length()); // ensure close after open
+        if (start == -1 || end == -1 || end < start) {
             return "";
         }
         return text.substring(start + open.length(), end).trim();
     }
-
-
 }
