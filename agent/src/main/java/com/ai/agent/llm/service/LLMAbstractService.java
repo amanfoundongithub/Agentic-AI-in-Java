@@ -2,8 +2,8 @@ package com.ai.agent.llm.service;
 
 import com.ai.agent.core.api.AnswerGenerationRequest;
 import com.ai.agent.core.api.AnswerGenerationResponse;
-import com.ai.agent.llm.dto.http.LLMHttpRequest;
-import com.ai.agent.llm.dto.http.LLMHttpResponse;
+import com.ai.agent.llm.http.LLMHttpRequest;
+import com.ai.agent.llm.http.LLMHttpResponse;
 import com.ai.agent.persistence.dao.LLMEntityDao;
 import com.ai.agent.persistence.entity.LLMEntity;
 import org.slf4j.Logger;

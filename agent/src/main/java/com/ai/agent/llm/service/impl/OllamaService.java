@@ -2,8 +2,8 @@ package com.ai.agent.llm.service.impl;
 
 import com.ai.agent.core.api.AnswerGenerationRequest;
 import com.ai.agent.core.api.AnswerGenerationResponse;
-import com.ai.agent.llm.dto.http.impl.OllamaAPIRequest;
-import com.ai.agent.llm.dto.http.impl.OllamaAPIResponse;
+import com.ai.agent.llm.http.impl.OllamaAPIRequest;
+import com.ai.agent.llm.http.impl.OllamaAPIResponse;
 import com.ai.agent.llm.service.LLMAbstractService;
 
 import jakarta.annotation.PostConstruct;

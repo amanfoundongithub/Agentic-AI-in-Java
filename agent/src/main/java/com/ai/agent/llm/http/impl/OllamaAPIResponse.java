@@ -1,6 +1,6 @@
-package com.ai.agent.llm.dto.http.impl;
+package com.ai.agent.llm.http.impl;
 
-import com.ai.agent.llm.dto.http.LLMHttpResponse;
+import com.ai.agent.llm.http.LLMHttpResponse;
 
 public class OllamaAPIResponse extends LLMHttpResponse {
 
