@@ -125,7 +125,7 @@ public class ReactAgent {
 
                         // Run the tool to fetch the result
                         ToolQuery queryObj = mapper.readValue(jsonQuery, queryClass);
-                        ToolResult toolResult = ((Tool<ToolResult, ToolQuery>) tool).execute(queryObj, "1234");
+                        ToolResult toolResult = ((Tool<ToolResult, ToolQuery>) tool).execute(queryObj, newRequest.getRequestId());
 
                         // Now add this result to the memory
                         String mappedStr = mapper.writeValueAsString(toolResult);
