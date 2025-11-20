@@ -4,8 +4,11 @@ import com.ai.agent.llm.dto.LLMRequest;
 import com.ai.agent.llm.dto.LLMResponse;
 import com.ai.agent.llm.dto.http.LLMHttpRequest;
 import com.ai.agent.llm.dto.http.LLMHttpResponse;
+import com.ai.agent.repository.dao.LLMEntityDao;
+import com.ai.agent.repository.document.LLMEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +23,9 @@ import org.springframework.web.client.RestTemplate;
  */
 public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLMHttpResponse> implements LLMService {
 
+    @Autowired
+    LLMEntityDao llmEntityDao;
+
     // Rest Template for REST exchange
     protected static final RestTemplate restTemplate = new RestTemplate();
 
@@ -30,7 +36,6 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     protected String url;
     protected String model;
     protected Class<R> responseClass;
-
 
     public String model() {
         return model;
@@ -75,7 +80,30 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
             llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Completed\n", request.getRequestId());
         }
 
+        // Log to MongoDB before sending back
+        logToDB(response);
+
         return response;
+    }
+
+    // Helper to log data to MongoDB
+    protected void logToDB(LLMResponse llmResponse) {
+
+        // New entity
+        LLMEntity dbEntity = new LLMEntity();
+
+        // Basic details
+        dbEntity.setRequestId(llmResponse.getRequestId());
+        dbEntity.setTime(llmResponse.getRequestDate());
+        dbEntity.setService(model);
+
+        // Generation details
+        dbEntity.setGenerated(llmResponse.isGenerated());
+        dbEntity.setGeneratedText(llmResponse.getText());
+        dbEntity.setErrorMessage(llmResponse.getErrorMessage());
+
+        // Save to DB
+        llmEntityDao.insert(dbEntity);
     }
 
 
