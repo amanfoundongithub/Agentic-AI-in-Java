@@ -125,7 +125,7 @@ public class ReactAgent {
 
                         // Run the tool to fetch the result
                         ToolQuery queryObj = mapper.readValue(jsonQuery, queryClass);
-                        ToolResult toolResult = ((Tool<ToolResult, ToolQuery>) tool).execute(queryObj);
+                        ToolResult toolResult = ((Tool<ToolResult, ToolQuery>) tool).execute(queryObj, "1234");
 
                         // Now add this result to the memory
                         String mappedStr = mapper.writeValueAsString(toolResult);
@@ -137,8 +137,6 @@ public class ReactAgent {
                         memory.add(AgentConfig.TOOL_ACTION, "ERROR: " + e.getMessage());
                     }
                 }
-
-
             }
 
             // LLM has exceeded the number of attempts so it makes sense to throw an error here
@@ -149,7 +147,7 @@ public class ReactAgent {
             LOGGER.error("ERROR: {}", e.getMessage());
             finalResponse.setErrorMessage(e.getMessage());
         } finally {
-            LOGGER.info("INFO: Request with requestId {} for agent (model = {}) COMPLETED", request.getRequestId(), model);
+            LOGGER.info("INFO: Request with requestId {} for agent (model = {}) COMPLETED\n", request.getRequestId(), model);
         }
 
         return finalResponse;
