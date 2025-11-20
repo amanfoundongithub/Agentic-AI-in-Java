@@ -1,7 +1,7 @@
 package com.ai.agent.llm.service;
 
-import com.ai.agent.llm.dto.LLMRequest;
-import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.core.api.AnswerGenerationRequest;
+import com.ai.agent.core.api.AnswerGenerationResponse;
 import com.ai.agent.llm.dto.http.LLMHttpRequest;
 import com.ai.agent.llm.dto.http.LLMHttpResponse;
 import com.ai.agent.persistence.dao.LLMEntityDao;
@@ -43,7 +43,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
         return model;
     }
 
-    public LLMResponse generate(LLMRequest request) {
+    public AnswerGenerationResponse generate(AnswerGenerationRequest request) {
 
         // Log the request received
         llmLogger.info("\tINFO: Request with requestId {} for LLM Answer Generation Received", request.getRequestId());
@@ -52,7 +52,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
         llmLogger.info("\tINFO: Starting the generation...");
 
         // Create a response object to be sent back, populate with default values
-        LLMResponse response = new LLMResponse();
+        AnswerGenerationResponse response = new AnswerGenerationResponse();
 
         response.setRequestId(request.getRequestId());
         response.setGenerated(false);
@@ -71,7 +71,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
                     .block();
 
             // Convert main fields for safety
-            LLMResponse dupResponse = convertResponse(responseEntity);
+            AnswerGenerationResponse dupResponse = convertResponse(responseEntity);
 
             // Set up the text and generated status
             response.setGenerated(true);
@@ -98,7 +98,7 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     }
 
     // Helper to log data to MongoDB
-    protected void logToDB(LLMResponse llmResponse) {
+    protected void logToDB(AnswerGenerationResponse llmResponse) {
 
         // New entity
         LLMEntity dbEntity = new LLMEntity();
@@ -126,8 +126,8 @@ public abstract class LLMAbstractService<Q extends LLMHttpRequest, R extends LLM
     }
 
     // Auxiliary function to convert HTTP Response to desired response
-    protected abstract LLMResponse convertResponse(R response);
+    protected abstract AnswerGenerationResponse convertResponse(R response);
 
     // Auxiliary function to convert request to desired HTTP Request
-    protected abstract Q convertRequest(LLMRequest request);
+    protected abstract Q convertRequest(AnswerGenerationRequest request);
 }

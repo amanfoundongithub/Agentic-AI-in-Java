@@ -1,7 +1,7 @@
 package com.ai.agent.controller;
 
-import com.ai.agent.llm.dto.LLMRequest;
-import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.core.api.AnswerGenerationRequest;
+import com.ai.agent.core.api.AnswerGenerationResponse;
 import com.ai.agent.react.ReactAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ public class TestController {
 
     // Route to test the ReAct agent
     @PostMapping("/run")
-    public LLMResponse runAgent(@RequestBody AgentRunRequest request) {
+    public AnswerGenerationResponse runAgent(@RequestBody AgentRunRequest request) {
 
-        LLMRequest llmReq = new LLMRequest();
+        AnswerGenerationRequest llmReq = new AnswerGenerationRequest();
         llmReq.setRequestId(request.getRequestId());
         llmReq.setPrompt(request.getPrompt());
         llmReq.setSystemPrompt(request.getSystemPrompt());

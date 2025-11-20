@@ -6,8 +6,8 @@ import com.ai.agent.core.config.AgentConfig;
 import com.ai.agent.core.exception.MaxAttemptsReachedException;
 import com.ai.agent.core.exception.UserPromptNotPresentException;
 import com.ai.agent.llm.LLMContext;
-import com.ai.agent.llm.dto.LLMRequest;
-import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.core.api.AnswerGenerationRequest;
+import com.ai.agent.core.api.AnswerGenerationResponse;
 import com.ai.agent.llm.service.LLMService;
 import com.ai.agent.mcp.MCPServer;
 import com.ai.agent.mcp.tool.Tool;
@@ -39,7 +39,7 @@ public class ReactAgent {
     }
 
 
-    public LLMResponse generate(LLMRequest request, String model) {
+    public AnswerGenerationResponse generate(AnswerGenerationRequest request, String model) {
 
         // Request is received!
         LOGGER.info("INFO: Request with requestId {} for agent (model = {}) RECEIVED", request.getRequestId(), model);
@@ -48,7 +48,7 @@ public class ReactAgent {
         LOGGER.info("INFO: Starting Generation Below...\n");
 
         // Create an LLM Response for the Agent and populate default values
-        LLMResponse finalResponse = new LLMResponse();
+        AnswerGenerationResponse finalResponse = new AnswerGenerationResponse();
         finalResponse.setRequestId(request.getRequestId());
         finalResponse.setGenerated(false);
 
@@ -85,10 +85,10 @@ public class ReactAgent {
                 String reactPrompt = memory.toString();
 
                 // Create a new request for the LLM with parameters
-                LLMRequest newRequest = new LLMRequest(reactPrompt, sysReactPrompt);
+                AnswerGenerationRequest newRequest = new AnswerGenerationRequest(reactPrompt, sysReactPrompt);
 
                 // Call service to generate response
-                LLMResponse newResponse = service.generate(newRequest);
+                AnswerGenerationResponse newResponse = service.generate(newRequest);
 
                 // If the response says LLM failed to generate, then we can retry to generate again
                 if(!newResponse.isGenerated()) {

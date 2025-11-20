@@ -1,7 +1,7 @@
 package com.ai.agent.core.util;
 
 import com.ai.agent.core.exception.InvalidRequest;
-import com.ai.agent.llm.dto.LLMRequest;
+import com.ai.agent.core.api.AnswerGenerationRequest;
 
 
 
@@ -15,7 +15,7 @@ public class LLMRequestValidator {
      * @param request The request to be validated
      * @throws InvalidRequest if the request is invalid
      */
-    public static void validate(LLMRequest request) throws InvalidRequest {
+    public static void validate(AnswerGenerationRequest request) throws InvalidRequest {
 
         if(request == null) {
             throw new InvalidRequest("ERR: Missing request. No request is provided. Provide one to generate response");

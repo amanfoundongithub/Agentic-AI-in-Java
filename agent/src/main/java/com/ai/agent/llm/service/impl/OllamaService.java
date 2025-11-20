@@ -1,7 +1,7 @@
 package com.ai.agent.llm.service.impl;
 
-import com.ai.agent.llm.dto.LLMRequest;
-import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.core.api.AnswerGenerationRequest;
+import com.ai.agent.core.api.AnswerGenerationResponse;
 import com.ai.agent.llm.dto.http.impl.OllamaAPIRequest;
 import com.ai.agent.llm.dto.http.impl.OllamaAPIResponse;
 import com.ai.agent.llm.service.LLMAbstractService;
@@ -28,14 +28,14 @@ public class OllamaService extends LLMAbstractService<OllamaAPIRequest, OllamaAP
     }
 
     @Override
-    protected LLMResponse convertResponse(OllamaAPIResponse response) {
-        LLMResponse res = new LLMResponse();
+    protected AnswerGenerationResponse convertResponse(OllamaAPIResponse response) {
+        AnswerGenerationResponse res = new AnswerGenerationResponse();
         res.setText(response.content.message.content);
         return res;
     }
 
     @Override
-    protected OllamaAPIRequest convertRequest(LLMRequest request) {
+    protected OllamaAPIRequest convertRequest(AnswerGenerationRequest request) {
         return new OllamaAPIRequest(request.getPrompt(), request.getSystemPrompt());
     }
 }

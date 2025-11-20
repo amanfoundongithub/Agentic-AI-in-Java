@@ -1,7 +1,7 @@
 package com.ai.agent.llm.service;
 
-import com.ai.agent.llm.dto.LLMRequest;
-import com.ai.agent.llm.dto.LLMResponse;
+import com.ai.agent.core.api.AnswerGenerationRequest;
+import com.ai.agent.core.api.AnswerGenerationResponse;
 
 /**
  * Interface for the LLM Service provided via APIs
@@ -18,6 +18,6 @@ public interface LLMService {
      * @param request The request for the LLM containing system and user prompts
      * @return A response body containing the response from LLM
      */
-    LLMResponse generate(LLMRequest request);
+    AnswerGenerationResponse generate(AnswerGenerationRequest request);
 
 }
