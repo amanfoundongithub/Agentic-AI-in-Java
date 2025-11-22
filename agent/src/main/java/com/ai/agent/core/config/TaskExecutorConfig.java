@@ -23,7 +23,7 @@ public class TaskExecutorConfig {
     @Value("${job.thread_workers_prefix}")
     private String threadWorkersPrefix;
 
-    @Bean(name = "agentExecutor")
+    @Bean(name = "agentExec")
     public ThreadPoolTaskExecutor llmExecutor() {
 
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
