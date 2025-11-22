@@ -1,7 +1,7 @@
 package com.ai.agent.controller;
 
 
-import com.ai.agent.controller.dto.AnswerRequestDTO;
+import com.ai.agent.controller.dto.request.AnswerRequestDTO;
 import com.ai.agent.controller.mapper.AnswerGenerationRequestMapper;
 import com.ai.agent.core.db.ResultDB;
 import com.ai.agent.core.job.AgentJobAllocator;
@@ -31,7 +31,7 @@ public class AgentController {
 
     @PostMapping("/generate")
     public ResponseEntity<Map<String, String>> generate(@RequestBody AnswerRequestDTO dto) {
-        String taskId = agentJobAllocator.allocate(new AnswerGenerationRequestMapper(dto), dto.getModel());
+        String taskId = agentJobAllocator.allocate(new AnswerGenerationRequestMapper(dto), dto.model());
 
         return ResponseEntity.accepted().body(
                 Map.of(
