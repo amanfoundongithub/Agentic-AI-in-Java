@@ -1,4 +1,4 @@
-package com.ai.agent.controller;
+package com.ai.agent.controller.rest;
 
 
 import com.ai.agent.controller.dto.response.HealthReport;
