@@ -30,7 +30,7 @@ server:
 
 # WebClient configurations
 web_client:
-  timeoutInSeconds: 20
+  timeoutInSeconds: 180
 
 
 # Configuration for JOB
