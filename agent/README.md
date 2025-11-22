@@ -1,9 +1,9 @@
-Agentic AI Implementation (Java)
----
+# Agentic AI Implementation (Java)
+
 This is the agentic part of the project. 
 The whole agent has been written by using native tools 
-of Java. Feel free to go through the instructions to run the agent
-locally.
+of Java Spring Boot. Feel free to go through this README.md to get a hang
+of how to get started with the project. 
 
 ## System Requirements
 Ensure that you have the following installed in your system
@@ -12,20 +12,32 @@ before you start the project:
 - An IDE (preferably `Intellij IDEA`)
 
 ## Initial Setup
-To setup the project, you need to create an `application-secret.yaml` in the `src/main/resources/` folder. 
-There is a `.txt` file provided. Copy that into the yaml file and populate the secret credentials
-in it (API Keys and stuff).
+
+### Non-Java Setup
+Before you start to work on this project, you need to have the following things configured
+in your machine:
+- **MongoDB**: Install the `MongoDB Compass` from [here](https://www.mongodb.com/docs/compass/install/). Use the 
+`mongod` command to start the MongoDB daemon that will run in the background.
+
+- **Redis**: Install the `Redis` client from [here](https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/). Redis is
+needed to cache all the jobs' results into a fast retrieval tool. 
+
+
+### Java Setup
+Sync the project with Gradle, ensuring all the modules are synced up-to-date. This can be easily
+done by any well-known IDEs (preferably Intellij). 
+
+After syncing up, you need to go to the `/src/main/resources/` folder and create an `application-secret.yaml` file there.
+
+(_The skeleton of the required file is already provided in a `.txt` file in the same directory. Populate the secret values as deemed 
+necessary. You might need to create some more setup for the same._)
+
 
 Spring requires that during execution these variables be present, 
-so ensure that you populate them before starting the program.
+so ensure that you populate them before starting the program, so make sure to complete this step before
+running the project. 
 
-Other than that, there is no other setup required for the project. The IDE that
-you chose (Eclipse or Intellij) will sync your gradle project themselves
-and install the required dependencies.
-
-Ensure that you sync the repositories before starting the Java portion.
-
-## Running The Agent
+## Running The Project
 **Important**: _Before running the agent, please ensure that you have
 the Python service up and running. Instructions to run Python service are 
 given [here](https://github.com/amanfoundongithub/Agentic-AI-in-Java/blob/main/Ollama%20Service/README.md)._
@@ -33,39 +45,20 @@ given [here](https://github.com/amanfoundongithub/Agentic-AI-in-Java/blob/main/O
 To run the agent, you can go to the `AgentApplication.java` and start debugging
 the application.
 
-When you start debugging, the agent will become active on the port 5200. 
+When you start debugging, the agent will become active on the port `6900`. 
 
-Any queries to the agent can be sent to the following URL:
-```
-http://localhost:5200/api/agent/run
-```
-This will be a `POST` request with a body of the following type:
-```json
-{
-  "prompt": "Summarize the results of Bihar elections 2025. Tell how many seats each party won!",
-  "systemPrompt": "You are an election expert",
-  "model": "llama3.2"
-}
-```
-The agent provides a response as follows:
-```json 
-{
-    "generated": true,
-    "text": "BJP: 89 Seats\nJD(U): 85 Seats\nRJD: 25 Seats\nLJP: 19 Seats\nINC: 6 Seats\nAIMIM: 5 Seats\nHAMS: 5 Seats"
-}
+This project has `Swagger-UI` enabled, so you can play with the APIs using the following link, once the server
+is up:
+``` 
+http://localhost:6900/swagger-ui/index.html
 ```
 
-## Further Improvements
-For now, the whole ecosystem adopts only one tool (namely `Google Search`) and 
-supports only one LLM (LLAMA 3.2) but the code has been written 
-with principles that any extension can be made to include more tools or
-LLMs in future without changing the core ReACT logic.
+## LLMs Supported
+The following LLMs are integrated as part of the project:
+- `llama3.2`
 
-Moreover, no test cases have been written for the agent, which does seems troubling since
-we never really tested on the edge cases for the agent. 
+## Tools Supported
+The following tools are implemented as part of the project:
+- `google_search` : Fetches results from Google
+- `web_scrapper` : Scrapes a website to fetch text details 
 
-## Updates:
-- **November 20, 2025**
-  - Port changed from 5200 to 6900. 
-  - Migration from RestTemplate to WebClient completed for entire codebase
-  - MongoDB logging completed for `LLMService` and `Tool`
