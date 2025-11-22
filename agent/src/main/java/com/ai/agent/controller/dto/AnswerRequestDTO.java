@@ -5,6 +5,7 @@ public class AnswerRequestDTO {
     private String requestId;
     private String prompt;
     private String sysPrompt;
+    private String model;
 
     public AnswerRequestDTO() {
     }
@@ -37,6 +38,13 @@ public class AnswerRequestDTO {
 
     public void setSysPrompt(String sysPrompt) {
         this.sysPrompt = sysPrompt;
+    }
+
+    public String getModel() {
+        return model;
+    }
+    public void setModel(String model) {
+        this.model = model;
     }
 
     @Override
