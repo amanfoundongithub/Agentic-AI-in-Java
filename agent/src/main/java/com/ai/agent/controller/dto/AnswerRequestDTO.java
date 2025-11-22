@@ -28,4 +28,5 @@ public record AnswerRequestDTO(
         String model,
 
         @Size(max = 2000, message = "sysPrompt cannot exceed more than 2000 characters")
-        String sysPrompt) {}
+        String sysPrompt
+) {}
