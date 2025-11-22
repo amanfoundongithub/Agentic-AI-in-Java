@@ -1,4 +1,4 @@
-package com.ai.agent.controller.agent.dto;
+package com.ai.agent.controller.dto;
 
 
 import jakarta.validation.constraints.NotBlank;
