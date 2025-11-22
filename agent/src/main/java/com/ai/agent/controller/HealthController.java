@@ -25,10 +25,10 @@ public class HealthController {
     }
 
 
-    @Operation(summary = "Health Check report of the server")
+    @Operation(summary = "OVERALL Health Check report of the server")
     @GetMapping("/check")
-    @ApiResponse(responseCode = "200", description = "Health check completed")
-    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    @ApiResponse(responseCode = "200", description = "Health check completed successfully")
+    @ApiResponse(responseCode = "500", description = "Internal Server Error during health check")
     public HealthReport check() {
         return service.check();
     }
