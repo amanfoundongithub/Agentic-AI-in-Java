@@ -1,6 +1,6 @@
 package com.ai.agent.controller.mapper;
 
-import com.ai.agent.controller.dto.AnswerRequestDTO;
+import com.ai.agent.controller.dto.request.AnswerRequestDTO;
 import com.ai.agent.core.api.AnswerGenerationRequest;
 
 
