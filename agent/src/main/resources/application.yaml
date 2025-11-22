@@ -26,3 +26,11 @@ server:
 # WebClient configurations
 web_client:
   timeoutInSeconds: 20
+
+
+# Configuration for JOB
+job:
+  pool_size: 4
+  max_pool_size: 6
+  max_queue_size: 1000
+  thread_workers_prefix: Agent_Worker
