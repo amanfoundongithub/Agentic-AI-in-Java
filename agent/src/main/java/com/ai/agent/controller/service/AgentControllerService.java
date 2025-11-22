@@ -2,7 +2,7 @@ package com.ai.agent.controller.service;
 
 
 import com.ai.agent.controller.dto.request.AnswerRequestDTO;
-import com.ai.agent.controller.dto.response.StatusQueryResponse;
+import com.ai.agent.controller.dto.response.JobStatusResponse;
 import com.ai.agent.controller.dto.response.AgentRequestSubmitted;
 import com.ai.agent.controller.mapper.AnswerGenerationRequestMapper;
 import com.ai.agent.core.db.ResultDB;
@@ -32,17 +32,17 @@ public class AgentControllerService {
         }
     }
 
-    public StatusQueryResponse getResponse(String taskId) {
+    public JobStatusResponse getResponse(String taskId) {
         try {
             Object response = db.get(taskId);
 
             if(response == null) {
-                return new StatusQueryResponse(taskId, JobStatus.PROCESSING, response);
+                return new JobStatusResponse(taskId, JobStatus.PROCESSING, response);
             } else {
-                return new StatusQueryResponse(taskId, JobStatus.COMPLETED, response);
+                return new JobStatusResponse(taskId, JobStatus.COMPLETED, response);
             }
         } catch (Exception e) {
-            return new StatusQueryResponse(taskId, JobStatus.ERROR, e.getMessage());
+            return new JobStatusResponse(taskId, JobStatus.ERROR, e.getMessage());
         }
     }
 }

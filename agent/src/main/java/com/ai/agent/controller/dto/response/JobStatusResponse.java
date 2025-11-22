@@ -1,6 +1,5 @@
 package com.ai.agent.controller.dto.response;
 
-import com.ai.agent.core.api.AnswerGenerationResponse;
 import com.ai.agent.core.enums.JobStatus;
 
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ import org.hibernate.validator.constraints.UUID;
  * @param jobStatus The status of the job
  * @param response The response, if any
  */
-public record StatusQueryResponse(
+public record JobStatusResponse(
 
         @NotNull(message = "requestId is required")
         @UUID(message = "Valid UUID")

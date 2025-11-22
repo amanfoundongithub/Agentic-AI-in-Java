@@ -3,7 +3,7 @@ package com.ai.agent.controller;
 
 import com.ai.agent.controller.dto.request.AnswerRequestDTO;
 import com.ai.agent.controller.dto.response.AgentRequestSubmitted;
-import com.ai.agent.controller.dto.response.StatusQueryResponse;
+import com.ai.agent.controller.dto.response.JobStatusResponse;
 import com.ai.agent.controller.service.AgentControllerService;
 
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class AgentController {
     }
 
     @GetMapping("/status/{taskId}")
-    public StatusQueryResponse getResult(@PathVariable String taskId) {
+    public JobStatusResponse getResult(@PathVariable String taskId) {
         return service.getResponse(taskId);
     }
 
