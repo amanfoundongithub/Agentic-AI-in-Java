@@ -1,58 +1,31 @@
 package com.ai.agent.controller.dto;
 
-public class AnswerRequestDTO {
 
-    private String requestId;
-    private String prompt;
-    private String sysPrompt;
-    private String model;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.UUID;
 
-    public AnswerRequestDTO() {
-    }
 
-    public AnswerRequestDTO(String requestId, String prompt, String sysPrompt) {
-        this.requestId = requestId;
-        this.prompt = prompt;
-        this.sysPrompt = sysPrompt;
-    }
+/**
+ * Record class for the Answer Request in RestController for Agent
+ *
+ * @param requestId The unique UUID corresponding to the request
+ * @param prompt The prompt/instruction for the agent to generate a response
+ * @param sysPrompt The system instructions to the agent, if any
+ * @param model The model to be used for generation
+ */
+public record AnswerRequestDTO(
 
-    public String getRequestId() {
-        return requestId;
-    }
+        @NotBlank(message = "requestId is required for tracking request")
+        @UUID(message = "requestId must be a valid UUID")
+        String requestId,
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+        @NotBlank(message = "prompt is required for generating response")
+        @Size(min = 1, max = 2000, message = "prompt must be between 1 to 2000 characters")
+        String prompt,
 
-    public String getPrompt() {
-        return prompt;
-    }
+        @NotBlank(message = "model is required to select the model to generate response")
+        String model,
 
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
-    }
-
-    public String getSysPrompt() {
-        return sysPrompt;
-    }
-
-    public void setSysPrompt(String sysPrompt) {
-        this.sysPrompt = sysPrompt;
-    }
-
-    public String getModel() {
-        return model;
-    }
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    @Override
-    public String toString() {
-        return "AnswerRequestDTO{" +
-                "requestId='" + requestId + '\'' +
-                ", prompt='" + prompt + '\'' +
-                ", sysPrompt='" + sysPrompt + '\'' +
-                '}';
-    }
-}
+        @Size(max = 2000, message = "sysPrompt cannot exceed more than 2000 characters")
+        String sysPrompt) {}
