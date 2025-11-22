@@ -17,6 +17,10 @@ class MemoryContextTest {
         // Define a new instance
         MemoryContext memoryContext = new MemoryContext();
 
+        // Test initially
+        assertEquals(0, memoryContext.getContext().size());
+        assertEquals("", memoryContext.toString());
+
         // Add samples to check
         memoryContext.add("user", "hello this is message 1");
         assertEquals(1, memoryContext.getContext().size());
@@ -27,7 +31,15 @@ class MemoryContextTest {
         assertEquals(2, memoryContext.getContext().size());
         assertEquals("this is system generated message 2", memoryContext.getContext().getLast().content());
 
+        // Now we wish to check string representation
+        String expected =
+                "user: hello this is message 1\n" +
+                        "system: this is system generated message 2\n";
+
+        assertEquals(expected, memoryContext.toString());
+
         // Test Completed!
+        // Does not make senss to add more lines, since it is pointless
     }
 
 
