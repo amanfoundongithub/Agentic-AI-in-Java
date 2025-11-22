@@ -5,6 +5,12 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 
+/**
+ * Report regarding the health of the server
+ *
+ * @param status The health of the server
+ * @param timeStamp timeStamp at which the health was reported
+ */
 public record HealthReport(
 
         @NotNull(message = "Report is incomplete without status")

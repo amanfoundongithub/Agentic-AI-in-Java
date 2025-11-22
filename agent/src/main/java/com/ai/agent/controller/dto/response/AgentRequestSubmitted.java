@@ -6,6 +6,14 @@ import org.hibernate.validator.constraints.UUID;
 
 import java.time.Instant;
 
+
+/**
+ * Response message for the job being sent to the pool for execution
+ *
+ * @param requestId The unique UUID used for tracking the request
+ * @param timeStamp The timestamp at which the request was sent to the orchestrator
+ * @param jobStatus The status of the job, being QUEUED or ERROR
+ */
 public record AgentRequestSubmitted(
 
         @NotNull(message = "ID is required for Redis DB access")
