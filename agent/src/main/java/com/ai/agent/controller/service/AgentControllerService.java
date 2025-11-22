@@ -1,7 +1,7 @@
 package com.ai.agent.controller.service;
 
 
-import com.ai.agent.controller.dto.request.AnswerRequestDTO;
+import com.ai.agent.controller.dto.request.AgentRequest;
 import com.ai.agent.controller.dto.response.JobStatusResponse;
 import com.ai.agent.controller.dto.response.AgentRequestSubmitted;
 import com.ai.agent.controller.mapper.AnswerGenerationRequestMapper;
@@ -23,7 +23,7 @@ public class AgentControllerService {
         this.db = db;
     }
 
-    public AgentRequestSubmitted submitRequest(AnswerRequestDTO request) {
+    public AgentRequestSubmitted submitRequest(AgentRequest request) {
         try {
             String requestId = jobAllocator.allocate(new AnswerGenerationRequestMapper(request), request.model());
             return new AgentRequestSubmitted(requestId, Instant.now(), JobStatus.QUEUED);

@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.UUID;
  * @param sysPrompt The system instructions to the agent, if any
  * @param model The model to be used for generation
  */
-public record AnswerRequestDTO(
+public record AgentRequest(
 
         @NotBlank(message = "requestId is required for tracking request")
         @UUID(message = "requestId must be a valid UUID")

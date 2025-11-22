@@ -1,6 +1,6 @@
 package com.ai.agent.controller.mapper;
 
-import com.ai.agent.controller.dto.request.AnswerRequestDTO;
+import com.ai.agent.controller.dto.request.AgentRequest;
 import com.ai.agent.core.api.AnswerGenerationRequest;
 
 
@@ -12,9 +12,9 @@ import com.ai.agent.core.api.AnswerGenerationRequest;
  */
 public class AnswerGenerationRequestMapper extends AnswerGenerationRequest {
 
-    private final AnswerRequestDTO requestDTO;
+    private final AgentRequest requestDTO;
 
-    public AnswerGenerationRequestMapper(AnswerRequestDTO requestDTO) {
+    public AnswerGenerationRequestMapper(AgentRequest requestDTO) {
         this.requestDTO = requestDTO;
     }
 

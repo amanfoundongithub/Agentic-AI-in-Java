@@ -1,7 +1,7 @@
 package com.ai.agent.controller.rest;
 
 
-import com.ai.agent.controller.dto.request.AnswerRequestDTO;
+import com.ai.agent.controller.dto.request.AgentRequest;
 import com.ai.agent.controller.dto.response.AgentRequestSubmitted;
 import com.ai.agent.controller.dto.response.JobStatusResponse;
 import com.ai.agent.controller.service.AgentControllerService;
@@ -29,8 +29,8 @@ public class AgentController {
 
     @Operation(summary = "Sends the request to Orchestrator for generation")
     @PostMapping("/generate")
-    public AgentRequestSubmitted generate(@Valid @RequestBody AnswerRequestDTO dto) {
-        return service.submitRequest(dto);
+    public AgentRequestSubmitted generate(@Valid @RequestBody AgentRequest request) {
+        return service.submitRequest(request);
     }
 
     @Operation(summary = "Status of the generation task")
